@@ -105,33 +105,33 @@ https://streaming-live.rtp.pt/liverepeater/smil:rtpafrica.smil/playlist.m3u8
 https://www.youtube.com/euronewspt/live
 
 # === THAILAND ===
-#EXTINF:-1 tvg-id="Channel5.th@SD" group-title="TH | General",Channel 5
+#EXTINF:-1 tvg-id="Channel5.th@SD" group-title="Thailand",Channel 5
 https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8
-#EXTINF:-1 tvg-id="Channel7.th@SD" group-title="TH | General",Channel 7
+#EXTINF:-1 tvg-id="Channel7.th@SD" group-title="Thailand",Channel 7
 https://lb1-live-mv.v2h-cdn.com/hls/ffac/gohg/gohg.m3u8
-#EXTINF:-1 tvg-id="Channel8.th@SD" group-title="TH | General",Channel 8 [Geo]
+#EXTINF:-1 tvg-id="Channel8.th@SD" group-title="Thailand",Channel 8 [Geo]
 https://prsmedia-mykojh.cdn.byteark.com/fleetstream/live/720p/index.m3u8
-#EXTINF:-1 tvg-id="CharoenCable37TV.th@SD" group-title="TH | General",Charoen Cable 37 TV
+#EXTINF:-1 tvg-id="CharoenCable37TV.th@SD" group-title="Thailand",Charoen Cable 37 TV
 http://www5.cabletv.co.th/StreamToCTV/cablechannel/playlist.m3u8
-#EXTINF:-1 tvg-id="GMM25.th@SD" group-title="TH | General",GMM25
+#EXTINF:-1 tvg-id="GMM25.th@SD" group-title="Thailand",GMM25
 https://bcovlive-a.akamaihd.net/57d4bf695e80436d9335f4f50adbe438/ap-southeast-1/6415628290001/7e85dc4a59904e45b4fdffebd62e1d82/playlist_ssaiM.m3u8
-#EXTINF:-1 tvg-id="MCOTHD.th@HD" group-title="TH | General",9 MCOT HD
+#EXTINF:-1 tvg-id="MCOTHD.th@HD" group-title="Thailand",9 MCOT HD
 https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="MONO29.th@SD" group-title="TH | General",MONO29
+#EXTINF:-1 tvg-id="MONO29.th@SD" group-title="Thailand",MONO29
 https://lb1-live-mv.v2h-cdn.com/hls/ffbc/ffolvgdhk/ffolvgdhk.m3u8
-#EXTINF:-1 tvg-id="NationTV.th@SD" group-title="TH | News",Nation TV
+#EXTINF:-1 tvg-id="NationTV.th@SD" group-title="Thailand",Nation TV
 https://nationtv-1jdcjo.cdn.byteark.com/fleetstream/nationtvlive/index.m3u8
-#EXTINF:-1 tvg-id="NBT2HD.th@SD" group-title="TH | Public",NBT 2HD
+#EXTINF:-1 tvg-id="NBT2HD.th@SD" group-title="Thailand",NBT 2HD
 https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="NBTWorld.th@SD" group-title="TH | News",NBT World
+#EXTINF:-1 tvg-id="NBTWorld.th@SD" group-title="Thailand",NBT World
 https://cdn-edge.iiptvcdn.com/live_event/smil:d36f-93c1-9c58-fdcc-427f.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="One31.th@SD" group-title="TH | General",One31
+#EXTINF:-1 tvg-id="One31.th@SD" group-title="Thailand",One31
 https://bcovlive-a.akamaihd.net/b6603a14ea59440a95e9235e14bc9332/ap-southeast-1/6415628290001/9c3d7fc7d10840a69e48b5939ae886e0/playlist_ssaiM.m3u8
-#EXTINF:-1 tvg-id="ThaiPBS.th@SD" group-title="TH | Public",Thai PBS
+#EXTINF:-1 tvg-id="ThaiPBS.th@SD" group-title="Thailand",Thai PBS
 https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
-#EXTINF:-1 tvg-id="ThairathTV.th@SD" group-title="TH | News",Thairath TV
+#EXTINF:-1 tvg-id="ThairathTV.th@SD" group-title="Thailand",Thairath TV
 https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8
-#EXTINF:-1 tvg-id="WorkpointTV.th@SD" group-title="TH | General",Workpoint TV
+#EXTINF:-1 tvg-id="WorkpointTV.th@SD" group-title="Thailandl",Workpoint TV
 https://lb1-live-mv.v2h-cdn.com/hls/ffcb/gbinrvp/gbinrvp.m3u8
 
 # === KIDS — ENGLISH ===
