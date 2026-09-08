@@ -1,7 +1,8 @@
 #EXTM3U
 #PLAYLIST:SSTV - France Portugal Thailand Kids
 # NOTE: User-filtered playlist.
-# NOTE: Geo-blocked or tokenized channels may not play in Thailand or in SS IPTV.
+# NOTE: Geo-blocked or tokenized channels may not play in Thailand or in IBO Player.
+# REVISION: 2026-09-08-refresh-1
 
 # === FRANCE ===
 #EXTINF:-1 tvg-id="arte.fr@SD" group-title="FR | Culture",ARTE Français [Geo]
