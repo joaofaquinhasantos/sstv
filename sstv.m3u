@@ -32,8 +32,14 @@ https://streaming-live.rtp.pt/liverepeater/rtp1HD.smil/playlist.m3u8
 #EXTINF:-1 group-title="PT | General",RTP 2 [Not 24/7 online]
 https://streaming-live.rtp.pt/liverepeater/rtp2HD.smil/playlist.m3u8
 
+#EXTINF:-1 tvg-id="TVI.pt" group-title="PT | General",TVI
+https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/TVI.m3u8
+
 #EXTINF:-1 group-title="PT | News",RTP Notícias
 https://streaming-live.rtp.pt/livetvhlsDVR/rtpnHDdvr.smil/playlist.m3u8
+
+#EXTINF:-1 tvg-id="CNNPortugal.pt" group-title="PT | News",CNN Portugal
+https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/CNN_Portugal.m3u8
 
 #EXTINF:-1 group-title="TH | Public",Thai PBS
 https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
