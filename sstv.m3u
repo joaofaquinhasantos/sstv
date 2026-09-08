@@ -1,153 +1,337 @@
 #EXTM3U
-#PLAYLIST:Legal Free TV - France Portugal Thailand Sports
-# NOTE: Personal-use playlist assembled from publicly available broadcaster/free-service streams.
-# NOTE: Geo-restricted channels will not work outside their licensed territory.
-# NOTE: Some broadcaster HLS URLs can change without notice.
-# NOTE: No paid-channel mirrors, credential bypasses, or DRM circumvention are included.
+#PLAYLIST:SSTV - France Portugal Thailand Kids News Sports
+# NOTE: Built from iptv-org public country stream lists plus previously verified free/public sources.
+# NOTE: Duplicate streams removed; obvious pay-TV/third-party piracy mirrors excluded.
+# NOTE: Geo-blocked or tokenized channels may not play in Thailand or in SS IPTV.
 
-#EXTINF:-1 group-title="FR | News",France 24 Français
-https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_2300.m3u8
-
-#EXTINF:-1 group-title="FR | Culture",ARTE Français [Geo FR/DE]
-https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8
-
-#EXTINF:-1 group-title="FR | News",BFM TV
-https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8
-
-#EXTINF:-1 group-title="FR | News",Euronews Français
-https://cdn-euronews.akamaized.net/live/eds/euronews-fr/25026/index.m3u8
-
-#EXTINF:-1 group-title="FR | International",TV5MONDE Asie [Geo]
-https://ott.tv5monde.com/Content/HLS/Live/channel(seasie)/variant.m3u8
-
-#EXTINF:-1 group-title="FR | News",TV5MONDE Info [Geo]
-https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8
-
-#EXTINF:-1 group-title="FR | General",W9 [Geo FR]
-https://origin-m6web.live.6cloud.fr/out/v1/6play/6play-w9/cmaf_q2hyb21h/hls-short-hd.m3u8
-
-#EXTINF:-1 group-title="PT | General",RTP 1 [Not 24/7 online]
-https://streaming-live.rtp.pt/liverepeater/rtp1HD.smil/playlist.m3u8
-
-#EXTINF:-1 group-title="PT | General",RTP 2 [Not 24/7 online]
-https://streaming-live.rtp.pt/liverepeater/rtp2HD.smil/playlist.m3u8
-
-#EXTINF:-1 tvg-id="TVI.pt" group-title="PT | General",TVI
-https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/TVI.m3u8
-
-#EXTINF:-1 group-title="PT | News",RTP Notícias
-https://streaming-live.rtp.pt/livetvhlsDVR/rtpnHDdvr.smil/playlist.m3u8
-
-#EXTINF:-1 tvg-id="CNNPortugal.pt" group-title="PT | News",CNN Portugal
-https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/CNN_Portugal.m3u8
-
-#EXTINF:-1 group-title="TH | Public",Thai PBS
-https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
-
-#EXTINF:-1 group-title="TH | Kids & Education",ALTV
-https://thaipbs-ujxrch.cdn.byteark.com/live/playlist_1080p/index.m3u8
-
-#EXTINF:-1 group-title="TH | General",9 MCOT HD
-https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
-
-#EXTINF:-1 group-title="TH | News",Nation TV
-https://nationtv-1jdcjo.cdn.byteark.com/fleetstream/nationtvlive/index.m3u8
-
-#EXTINF:-1 group-title="TH | Public",NBT 2HD
-https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8
-
-#EXTINF:-1 group-title="TH | Public",NBT World
-https://cdn-edge.iiptvcdn.com/live_event/smil:d36f-93c1-9c58-fdcc-427f.smil/playlist.m3u8
-
-#EXTINF:-1 group-title="TH | General",GMM25
-https://bcovlive-a.akamaihd.net/57d4bf695e80436d9335f4f50adbe438/ap-southeast-1/6415628290001/7e85dc4a59904e45b4fdffebd62e1d82/playlist_ssaiM.m3u8
-
-#EXTINF:-1 group-title="TH | General",One31
-https://bcovlive-a.akamaihd.net/b6603a14ea59440a95e9235e14bc9332/ap-southeast-1/6415628290001/9c3d7fc7d10840a69e48b5939ae886e0/playlist_ssaiM.m3u8
-
-#EXTINF:-1 group-title="TH | News",Top News
-https://live.topnews.co.th/hls/topnews_a_720.m3u8
-
-#EXTINF:-1 group-title="TH | Public",Thai Parliament TV [Not 24/7]
-https://tv-live.tpchannel.org/live/tv.m3u8
-
-#EXTINF:-1 group-title="TH | Education",STOU Channel
-https://stream1.stou.ac.th/live/stou_720p/playlist.m3u8
-
-#EXTINF:-1 group-title="TH | General",Thai Chaiyo
-https://live.thaichaiyo.tv/tcy/live-transmux.m3u8
-
-#EXTINF:-1 group-title="TH | General",Cool Channel
-https://live-iptv.cool-channel.com/cool/live-720P.m3u8
-
-#EXTINF:-1 group-title="TH | Public",Police TV
-https://cdn-th-vip.livestreaming.in.th/policetv/policetv/playlist.m3u8
-
-#EXTINF:-1 group-title="SPORTS | Free",Africa24 Sport
+#EXTINF:-1 tvg-id="20MinutesTV.fr@SD" group-title="FR | General",20 Minutes TV
+https://live-20minutestv.digiteka.com/1961167769/index.m3u8
+#EXTINF:-1 tvg-id="ADNTVPlus.fr@SD" group-title="FR | Kids",ADN TV+
+https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8
+#EXTINF:-1 tvg-id="Africa24.fr@SD" group-title="FR | News",Africa 24
+https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8
+#EXTINF:-1 tvg-id="Africa24English.fr@SD" group-title="FR | News",Africa 24 English
+https://edge20.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8
+#EXTINF:-1 tvg-id="Africa24Sport.fr@SD" group-title="FR | Sports",Africa 24 Sport
 https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8
-
-#EXTINF:-1 group-title="SPORTS | Free",TRACE Sport Stars
+#EXTINF:-1 tvg-id="AfricanewsEnglish.fr@SD" group-title="FR | News",Africanews English
+https://cdn-euronews.akamaized.net/live/eds/africanews-en/25049/index.m3u8
+#EXTINF:-1 tvg-id="AfricanewsFrench.fr@SD" group-title="FR | News",Africanews French
+https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8
+#EXTINF:-1 tvg-id="AlpedHuezTV.fr@SD" group-title="FR | Local",Alpe d’Huez TV
+https://edge13.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8
+#EXTINF:-1 tvg-id="AntenneReunion.fr@SD" group-title="FR | Regional",Antenne Réunion
+https://live-antenne-reunion.zeop.tv/live/c3eds/antreunihd/hls_fta/antreunihd.m3u8?location=ZEOP01
+#EXTINF:-1 tvg-id="arte.fr@SD" group-title="FR | Culture",ARTE Français [Geo]
+https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8
+#EXTINF:-1 tvg-id="BFM2.fr@HD" group-title="FR | News",BFM2
+https://d1ib1gsg71oarf.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-scp7wda722jph/BFM2_FR.m3u8
+#EXTINF:-1 tvg-id="BFMBusiness.fr@SD" group-title="FR | News",BFM Business
+https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8
+#EXTINF:-1 tvg-id="BFMLyon.fr@SD" group-title="FR | News",BFM Lyon
+https://live-cdn-bfmtvlyo-euw1.bfmtv.bct.nextradiotv.com/master.m3u8
+#EXTINF:-1 tvg-id="BFMTV.fr@SD" group-title="FR | News",BFM TV
+https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8
+#EXTINF:-1 tvg-id="BrionnaisTV.fr@SD" group-title="FR | Local",Brionnais TV
+https://stream2.mandarine.media/brionnaistv/brionnaistv/playlist.m3u8
+#EXTINF:-1 tvg-id="Caillou.fr@SD" group-title="FR | Kids",Caillou
+https://do7nccdsswstc.cloudfront.net/v1/manifest/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-1aso0bc668saa/a5233c83-f772-4a81-959a-45ec7877ef61/5.m3u8
+#EXTINF:-1 tvg-id="Canal32.fr@SD" group-title="FR | Local",Canal 32
+https://event.vedge.infomaniak.com/livecast/ik:canal32_4/manifest.m3u8
+#EXTINF:-1 tvg-id="CannesLerinsTV.fr@SD" group-title="FR | Local",Cannes Lérins TV
+https://vdo2.pro-fhi.net:3628/live/uppodsfqlive.m3u8
+#EXTINF:-1 tvg-id="DBMTV.fr@SD" group-title="FR | Local",DBM TV
+https://dbmtv.vedge.infomaniak.com/livecast/dbmtv/playlist.m3u8
+#EXTINF:-1 tvg-id="EuronewsFrench.fr@SD" group-title="FR | News",Euronews Français
+https://cdn-euronews.akamaized.net/live/eds/euronews-fr/25026/index.m3u8
+#EXTINF:-1 tvg-id="EvandisGospelTV.fr@SD" group-title="FR | General",Evandis Gospel TV
+https://evandis.streamakaci.tv/str_evandis_evandis/str_evandis_multi/playlist.m3u8
+#EXTINF:-1 tvg-id="FashionTVParisLOriginal.fr@SD" group-title="FR | Lifestyle",FashionTV Paris L'Original
+https://edge-fast3.evrideo.tv/bfdbb576-83f7-11f0-9f89-0200170e3e04_1000028043_HLS/manifest.m3u8
+#EXTINF:-1 tvg-id="France24.fr@French" group-title="FR | News",France 24 Français
+https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_2300.m3u8
+#EXTINF:-1 tvg-id="France24.fr@English" group-title="FR | News",France 24 English
+https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_2300.m3u8
+#EXTINF:-1 tvg-id="France24.fr@Arabic" group-title="FR | News",France 24 Arabic
+https://live.france24.com/hls/live/2037222/F24_AR_HI_HLS/master_2300.m3u8
+#EXTINF:-1 tvg-id="France24.fr@Spanish" group-title="FR | News",France 24 Español
+https://live.france24.com/hls/live/2037220/F24_ES_HI_HLS/master_2300.m3u8
+#EXTINF:-1 tvg-id="Francophonie24.fr@SD" group-title="FR | General",Francophonie24
+https://5421175365ea3.streamlock.net/live/smil:switch.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="GenerationsTV.fr@SD" group-title="FR | Music",Generations TV
+https://event.vedge.infomaniak.com/livecast/ik:generation-tv/manifest.m3u8
+#EXTINF:-1 tvg-id="Gong.fr@SD" group-title="FR | General",Gong
+https://amg01596-gongnetworks-gong-ono-vh5f2.amagi.tv/1080p-vtt/index.m3u8
+#EXTINF:-1 tvg-id="HANDICAPTV.fr@SD" group-title="FR | General",HANDICAP TV France
+https://srv.webtvmanager.fr:3697/stream/play.m3u8
+#EXTINF:-1 tvg-id="ILTV.fr@SD" group-title="FR | Local",ILTV
+https://live.creacast.com/iltv/smil:iltv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="KTO.fr@SD" group-title="FR | General",KTO
+https://live-kto.akamaized.net/hls/live/2033284/KTO/master.m3u8
+#EXTINF:-1 tvg-id="LeFigaroTVIledeFrance.fr@SD" group-title="FR | News",Le Figaro TV Île-de-France
+https://static.lefigaro.fr/secom/tnt.m3u8
+#EXTINF:-1 tvg-id="LittoralFMTV.fr@SD" group-title="FR | Local",Littoral FM TV
+https://live.creacast.com/littoralfm-ch1/stream/playlist.m3u8
+#EXTINF:-1 tvg-id="MonteCarloDigitalTelevision.fr@HD" group-title="FR | General",Monte Carlo Digital Television
+https://fl718492-exthls-p1.flovp.com/fl718492/live/live.m3u8
+#EXTINF:-1 tvg-id="MyZenTV.fr@SD" group-title="FR | Lifestyle",MyZen TV
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01255-secomcofites-my-myzen-en-plex/playlist.m3u8
+#EXTINF:-1 tvg-id="P2MTV.fr@SD" group-title="FR | General",P2M TV
+https://vdo2.pro-fhi.net:3207/stream/play.m3u8
+#EXTINF:-1 tvg-id="PuissanceTV.fr@SD" group-title="FR | Local",Puissance TV
+https://event.vedge.infomaniak.com/livecast/ik:puissancetelevision/manifest.m3u8
+#EXTINF:-1 tvg-id="RMCStory.fr@SD" group-title="FR | General",RMC Story
+https://d15aro46bnpfm8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-fqkqiax1078up/RMC_Story_FR.m3u8
+#EXTINF:-1 tvg-id="SonyOneBlacklist.fr@HD" group-title="FR | FAST",Sony One Blacklist
+https://d1x87j1jmcypab.cloudfront.net/playlist.m3u8
+#EXTINF:-1 tvg-id="SonyOneFavoris.fr@HD" group-title="FR | FAST",Sony One Favoris
+https://d21fkiqbljd83t.cloudfront.net/playlist.m3u8
+#EXTINF:-1 tvg-id="SonyOneHitsAction.fr@HD" group-title="FR | FAST",Sony One Hits Action
+https://d1tvu4639eiqii.cloudfront.net/playlist.m3u8
+#EXTINF:-1 tvg-id="SonyOneHitsComedie.fr@HD" group-title="FR | FAST",Sony One Hits Comédie
+https://d3nvxupr08boay.cloudfront.net/playlist.m3u8
+#EXTINF:-1 tvg-id="TeleGohelle.fr@SD" group-title="FR | Local",TéléGohelle
+https://videas.agglo-lenslievin.fr/index.m3u8
+#EXTINF:-1 tvg-id="TiVi5Monde.fr@SD" group-title="FR | Kids",TiVi5MONDE [Geo]
+https://ott.tv5monde.com/Content/HLS/Live/channel(tivi5)/variant.m3u8
+#EXTINF:-1 tvg-id="TraceSportStars.fr@SD" group-title="FR | Sports",TRACE Sport Stars
 https://channels.trace.plus/Traceprod/TRACE_SPORT_STARS_sd/index.m3u8
-
-#EXTINF:-1 group-title="SPORTS | Free",Sport en France
+#EXTINF:-1 tvg-id="TV3V.fr@SD" group-title="FR | Local",TV3V
+https://tv3v.live-kd.com/live/tv3v/livestream/index.m3u8
+#EXTINF:-1 tvg-id="TV5MONDEChefs.fr@SD" group-title="FR | General",TV5MONDE Chefs
+https://tvf-tv5ch.otteravision.com/tvf/tv5ch/tv5ch.m3u8
+#EXTINF:-1 tvg-id="TV5MondeEurope.fr@SD" group-title="FR | General",TV5MONDE Europe [Geo]
+https://ott.tv5monde.com/Content/HLS/Live/channel(europe)/variant.m3u8
+#EXTINF:-1 tvg-id="TV5MondeFranceBelgiumSwitzerlandMonaco.fr@SD" group-title="FR | General",TV5MONDE FBSM [Geo]
+https://ott.tv5monde.com/Content/HLS/Live/channel(fbs)/variant.m3u8
+#EXTINF:-1 tvg-id="TV5MondeInfo.fr@SD" group-title="FR | News",TV5MONDE Info [Geo]
+https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8
+#EXTINF:-1 tvg-id="TV5MondePacific.fr@SD" group-title="FR | General",TV5MONDE Pacifique [Geo]
+https://ott.tv5monde.com/Content/HLS/Live/channel(pacifique)/variant.m3u8
+#EXTINF:-1 tvg-id="TV5MondeStyle.fr@SD" group-title="FR | Lifestyle",TV5MONDE Style [Geo]
+https://ott.tv5monde.com/Content/HLS/Live/channel(style1)/variant.m3u8
+#EXTINF:-1 tvg-id="TV7Colmar.fr@SD" group-title="FR | Local",TV7 Colmar
+https://tv7.live-kd.com/live/tv7/livestream/playlist.m3u8
+#EXTINF:-1 tvg-id="TV78.fr@SD" group-title="FR | Local",TV78
+https://streamtv.cdn.dvmr.fr/TV78/ngrp:tv78.stream_all/master.m3u8
+#EXTINF:-1 tvg-id="TVR.fr@SD" group-title="FR | Local",TVR Bretagne
+https://streamtv.cdn.dvmr.fr/TVR/ngrp:tvr.stream_all/master.m3u8
+#EXTINF:-1 tvg-id="TZiK.fr@SD" group-title="FR | Music",TZiK
+https://54627d4fc5996.streamlock.net/tzik/tzik/chunklist.m3u8
+#EXTINF:-1 tvg-id="ViaMatele.fr@SD" group-title="FR | Local",ViàMatélé
+https://5dd226f8f01e8.streamlock.net/via-matele-live/matelelive_1080/playlist.m3u8
+#EXTINF:-1 tvg-id="MoselleTV.fr@SD" group-title="FR | Local",viàMoselleTV
+https://live.creacast.com/mirabelletv/smil:mirabelletv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="ViaOccitanie.fr@SD" group-title="FR | Local",viàOccitanie
+https://streamer01.myvideoplace.tv/streamer02/hls/MDS_VIA_PAD_301117.m3u8
+#EXTINF:-1 tvg-id="viaTelePaese.fr@SD" group-title="FR | Local",viàTéléPaese
+https://srv.webtvmanager.fr:3970/live/viatelepaeselive.m3u8
+#EXTINF:-1 tvg-id="VosgesTV.fr@SD" group-title="FR | Local",Vosges Télévision
+https://vosgestv.live-kd.com/live/vosgestv/vosgestv/playlist.m3u8
+#EXTINF:-1 tvg-id="W9.fr@SD" group-title="FR | General",W9 [Geo]
+https://origin-m6web.live.6cloud.fr/out/v1/6play/6play-w9/cmaf_q2hyb21h/hls-short-hd720.m3u8
+#EXTINF:-1 tvg-id="zenith.fr@HD" group-title="FR | General",Zenith
+https://live.azenagroup.com/zenith/index.m3u8
+#EXTINF:-1 group-title="FR | Sports",Sport en France
 https://sportenfrance.tvchain.network/hls/sp1564435593_med/index.m3u8
 
-#EXTINF:-1 group-title="PT | General",SIC [Geo/headers may be required]
-#EXTVLCOPT:http-referrer=https://sic.pt/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0
+#EXTINF:-1 tvg-id="ADBTV.pt@SD" group-title="PT | General",ADB TV
+https://live-tv.waytv.pt/adbtv/adbtv/playlist.m3u8
+#EXTINF:-1 tvg-id="ARTV.pt@SD" group-title="PT | Public",ARTV Canal Parlamento
+https://playout172.livextend.cloud/liveiframe/_definst_/liveartvabr/playlist.m3u8
+#EXTINF:-1 tvg-id="Famatv.pt@SD" group-title="PT | General",Fama TV
+https://tv2.fastcast4u.com:3310/live/famatvlive.m3u8
+#EXTINF:-1 tvg-id="KuriakosMusic.pt@SD" group-title="PT | Music",Kuriakos Music
+http://195.23.211.179:1935/kmusic/smil:kmusic.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="KuriakosTV.pt@SD" group-title="PT | General",Kuriakos TV
+https://w1.manasat.com/ktv/smil:ktv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="ManaChurchOnline.pt@SD" group-title="PT | General",Maná Church Online
+https://w2.manasat.com/church-online/smil:church-online.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="ManaIgrejaOnline.pt@SD" group-title="PT | General",Maná Igreja Online
+https://w1.manasat.com/igrejaonline/smil:igrejaonline.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="NPCRadioeTV.pt@SD" group-title="PT | General",NPC Rádio e TV
+https://stmv5.samcast.com.br/nasciparacantartv/nasciparacantartv/playlist.m3u8
+#EXTINF:-1 tvg-id="ONFM.pt@SD" group-title="PT | Music",ON FM
+https://5ce9406b73c33.streamlock.net/ONFM/livestream/playlist.m3u8
+#EXTINF:-1 tvg-id="PortoCanal.pt@SD" group-title="PT | Regional",Porto Canal
+https://pull-live-156-1.global.ssl.fastly.net/pc5865dc25400thmb-ea6bf03b14fa318f7133/smil:pc1-jhrgyuoqe5865db-68tkgb14fa318f7133f03.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RadioSines.pt@SD" group-title="PT | Regional",Rádio Sines TV [Geo]
+https://load-balancer.azotosolutions.com/cdnedge19/smil:live19.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RFPtv.pt@SD" group-title="PT | General",RFPtv
+https://video03.logicahost.com.br/rfptv/rfptv/playlist.m3u8
+#EXTINF:-1 tvg-id="RTP1.pt@HD" group-title="PT | General",RTP 1
+https://streaming-live.rtp.pt/liverepeater/rtp1HD.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTP2.pt@HD" group-title="PT | General",RTP 2
+https://streaming-live.rtp.pt/liverepeater/rtp2HD.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTPAcores.pt@HD" group-title="PT | Regional",RTP Açores
+https://streaming-live.rtp.pt/liverepeater/smil:rtpacoresHD.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTPAfrica.pt@SD" group-title="PT | International",RTP África
+https://streaming-live.rtp.pt/liverepeater/smil:rtpafrica.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTPMadeira.pt@SD" group-title="PT | Regional",RTP Madeira
+https://streaming-live.rtp.pt/liverepeater/smil:rtpmadeira.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTPMemoria.pt@SD" group-title="PT | General",RTP Memória
+https://streaming-live.rtp.pt/liverepeater/smil:rtpmem.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTPMundo.pt@SD" group-title="PT | International",RTP Mundo
+https://streaming-live.rtp.pt/liverepeater/smil:rtpi.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTPNoticias.pt@HD" group-title="PT | News",RTP Notícias
+https://streaming-live.rtp.pt/livetvhlsDVR/rtpnHDdvr.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="SIC.pt@SD" group-title="PT | General",SIC [Geo]
 https://sic.live.impresa.pt/sic.m3u8
-
-#EXTINF:-1 group-title="PT | News",SIC Notícias [Geo/headers may be required]
-#EXTVLCOPT:http-referrer=https://sicnoticias.pt/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0
+#EXTINF:-1 tvg-id="SICAltaDefinicao.pt@SD" group-title="PT | FAST",SIC Alta Definição
+https://production-fast-sic.content.okast.tv/fa2e8c4385712f9aa54bbe52b1bd9b6b/channels/d9070446-8448-455e-8075-773b1ba12562/fc831b20-f252-4e7d-8cc5-2d05f4d43c1c/media_.m3u8
+#EXTINF:-1 tvg-id="SICNoticias.pt@SD" group-title="PT | News",SIC Notícias [Geo]
 https://sicnot.live.impresa.pt/sicnot.m3u8
+#EXTINF:-1 tvg-id="SICReplay.pt@SD" group-title="PT | FAST",SIC Replay
+https://production-fast-sic.content.okast.tv/fa2e8c4385712f9a7dce4ff2dcebac2e/channels/d9070446-8448-455e-8075-773b1ba12562/d47eae0f-ad77-414a-9a1d-2a6628ba18c3/media_.m3u8
+#EXTINF:-1 tvg-id="TVMana1.pt@SD" group-title="PT | General",TV Maná 1
+https://w1.manasat.com/tvmana-1/smil:tvmana-1.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="TVMana2.pt@SD" group-title="PT | General",TV Maná 2
+https://w1.manasat.com/tvmana-2/smil:tvmana-2.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="TVManaBrasil.pt@SD" group-title="PT | General",TV Maná Brasil
+https://w1.manasat.com/tvmana-brasil/smil:tvmana-brasil.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="TVManaEnglish.pt@SD" group-title="PT | General",TV Maná English
+https://w1.manasat.com/tvmana-english/smil:tvmana-english.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="TVManaEspanhol.pt@SD" group-title="PT | General",TV Maná Español
+https://w1.manasat.com/tvmana-espanol/smil:tvmana-espanol.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="TVManaRusskiy.pt@SD" group-title="PT | General",TV Maná Russkiy
+https://w1.manasat.com/tvmana-leste/smil:tvmana-leste.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="WayTV.pt@SD" group-title="PT | General",Way TV
+https://stream-hls.castr-cdn.com/5d714f6a0bd97874e36f14e4/live_057ee4605c1711efbd4135c4457c726c/index.fmp4.m3u8
+#EXTINF:-1 tvg-id="TVI.pt@SD" group-title="PT | General",TVI
+https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/TVI.m3u8
+#EXTINF:-1 tvg-id="CNNPortugal.pt" group-title="PT | News",CNN Portugal
+https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/CNN_Portugal.m3u8
+#EXTINF:-1 tvg-id="EuronewsPortuguese.fr@SD" group-title="PT | News",Euronews Português
+https://cdn-euronews.akamaized.net/live/eds/euronews-pt/25040/index.m3u8
 
-#EXTINF:-1 group-title="PT | News",Euronews Português
-https://0ff3c09c7580460e8e018cdcaacbadee.mediatailor.us-east-1.amazonaws.com/v1/manifest/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-pt_EuroNewsLive/de58ab88-b103-4df8-b87a-71190e6f9482/5.m3u8
-
-#EXTINF:-1 group-title="FR | General",M6 [Experimental - official HLS; may require geo/DRM]
-https://origin-m6web.live.6cloud.fr/out/v1/6play/6play-m6/cmaf_fp00/hls-short-hd.m3u8
-
-# --- KIDS EXPANSION v3 | English / French ---
-
-#EXTINF:-1 tvg-id="TiVi5Monde.fr" group-title="KIDS | Français",TiVi5MONDE [Geo]
-https://ott.tv5monde.com/Content/HLS/Live/channel(tivi5)/variant.m3u8
-
-#EXTINF:-1 tvg-id="Gulli.fr" group-title="KIDS | Français",Gulli [Experimental | Geo/DRM may apply]
-https://origin-m6web.live.6cloud.fr/out/v1/6play/6play-gulli/cmaf_fp00/hls-short-hd.m3u8
+#EXTINF:-1 tvg-id="13SiamThai.th@SD" group-title="TH | General",13 Siam Thai
+https://live.x2.co.th/live/13livetv-th.m3u8
+#EXTINF:-1 tvg-id="ALTV.th@SD" group-title="TH | Kids & Education",ALTV
+https://thaipbs-ujxrch.cdn.byteark.com/live/playlist_1080p/index.m3u8
+#EXTINF:-1 tvg-id="AmarinTV.th@SD" group-title="TH | General",Amarin TV
+https://lb1-live-mv.v2h-cdn.com/hls/ffad/vibomi/vibomi.m3u8
+#EXTINF:-1 tvg-id="News1.th@SD" group-title="TH | News",ASTV News 1
+http://news1.live14.com/stream/news1.m3u8
+#EXTINF:-1 tvg-id="BaanBaanTV73.th@SD" group-title="TH | General",Baan Baan TV 73
+https://vdo.plathong.net/live8794/live8794/playlist.m3u8
+#EXTINF:-1 tvg-id="BoonniyomTV.th@SD" group-title="TH | General",Boonniyom TV
+https://live.x2.co.th/live/bntv.m3u8
+#EXTINF:-1 tvg-id="Channel5.th@SD" group-title="TH | General",Channel 5
+https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8
+#EXTINF:-1 tvg-id="Channel7.th@SD" group-title="TH | General",Channel 7
+https://lb1-live-mv.v2h-cdn.com/hls/ffac/gohg/gohg.m3u8
+#EXTINF:-1 tvg-id="Channel8.th@SD" group-title="TH | General",Channel 8 [Geo]
+https://prsmedia-mykojh.cdn.byteark.com/fleetstream/live/720p/index.m3u8
+#EXTINF:-1 tvg-id="CharoenCable37TV.th@SD" group-title="TH | General",Charoen Cable 37 TV
+http://www5.cabletv.co.th/StreamToCTV/cablechannel/playlist.m3u8
+#EXTINF:-1 tvg-id="CoolChannel.th@SD" group-title="TH | General",Cool Channel
+https://live-iptv.cool-channel.com/cool/live-720P.m3u8
+#EXTINF:-1 tvg-id="DLTV1.th@SD" group-title="TH | Kids & Education",DLTV 1
+https://cdn-live.dltv.ac.th/dltv01.m3u8
+#EXTINF:-1 tvg-id="DLTV2.th@SD" group-title="TH | Kids & Education",DLTV 2
+https://cdn-live.dltv.ac.th/dltv02.m3u8
+#EXTINF:-1 tvg-id="DLTV3.th@SD" group-title="TH | Kids & Education",DLTV 3
+https://cdn-live.dltv.ac.th/dltv03.m3u8
+#EXTINF:-1 tvg-id="DLTV4.th@SD" group-title="TH | Kids & Education",DLTV 4
+https://cdn-live.dltv.ac.th/dltv04.m3u8
+#EXTINF:-1 tvg-id="DLTV5.th@SD" group-title="TH | Kids & Education",DLTV 5
+https://cdn-live.dltv.ac.th/dltv05.m3u8
+#EXTINF:-1 tvg-id="DLTV6.th@SD" group-title="TH | Kids & Education",DLTV 6
+https://cdn-live.dltv.ac.th/dltv06.m3u8
+#EXTINF:-1 tvg-id="DLTV7.th@SD" group-title="TH | Kids & Education",DLTV 7
+https://cdn-live.dltv.ac.th/dltv07.m3u8
+#EXTINF:-1 tvg-id="DLTV8.th@SD" group-title="TH | Kids & Education",DLTV 8
+https://cdn-live.dltv.ac.th/dltv08.m3u8
+#EXTINF:-1 tvg-id="DLTV9.th@SD" group-title="TH | Kids & Education",DLTV 9
+https://cdn-live.dltv.ac.th/dltv09.m3u8
+#EXTINF:-1 tvg-id="DLTV10.th@SD" group-title="TH | Kids & Education",DLTV 10
+https://cdn-live.dltv.ac.th/dltv10.m3u8
+#EXTINF:-1 tvg-id="DLTV11.th@SD" group-title="TH | Kids & Education",DLTV 11
+https://cdn-live.dltv.ac.th/dltv11.m3u8
+#EXTINF:-1 tvg-id="DLTV12.th@SD" group-title="TH | Kids & Education",DLTV 12
+https://cdn-live.dltv.ac.th/dltv12.m3u8
+#EXTINF:-1 tvg-id="DLTV13.th@SD" group-title="TH | Kids & Education",DLTV 13
+https://cdn-live.dltv.ac.th/dltv13.m3u8
+#EXTINF:-1 tvg-id="DLTV14.th@SD" group-title="TH | Kids & Education",DLTV 14
+https://cdn-live.dltv.ac.th/dltv14.m3u8
+#EXTINF:-1 tvg-id="DLTV15.th@SD" group-title="TH | Kids & Education",DLTV 15
+https://cdn-live.dltv.ac.th/dltv15.m3u8
+#EXTINF:-1 tvg-id="DopaChannel.th@SD" group-title="TH | Public",Dopa Channel
+http://dopachannel.truegse.com/live/dopatv03.m3u8
+#EXTINF:-1 tvg-id="ETV.th@SD" group-title="TH | Education",ETV
+http://150.95.66.20:1935/live/livestream/playlist.m3u8
+#EXTINF:-1 tvg-id="GMM25.th@SD" group-title="TH | General",GMM25
+https://bcovlive-a.akamaihd.net/57d4bf695e80436d9335f4f50adbe438/ap-southeast-1/6415628290001/7e85dc4a59904e45b4fdffebd62e1d82/playlist_ssaiM.m3u8
+#EXTINF:-1 tvg-id="GoodIdeaTV.th@SD" group-title="TH | General",Good Idea TV
+http://stream1.ai-net.net:1935/gtv1/_definst_/smil:gtv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="HalalTV.th@SD" group-title="TH | General",Halal TV
+https://vdo.plathong.net/Halaltv/Halaltv/playlist.m3u8
+#EXTINF:-1 tvg-id="MCOTHD.th@HD" group-title="TH | General",9 MCOT HD
+https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="MONO29.th@SD" group-title="TH | General",MONO29
+https://lb1-live-mv.v2h-cdn.com/hls/ffbc/ffolvgdhk/ffolvgdhk.m3u8
+#EXTINF:-1 tvg-id="NationTV.th@SD" group-title="TH | News",Nation TV
+https://nationtv-1jdcjo.cdn.byteark.com/fleetstream/nationtvlive/index.m3u8
+#EXTINF:-1 tvg-id="NBT2HD.th@SD" group-title="TH | Public",NBT 2HD
+https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="NBTWorld.th@SD" group-title="TH | News",NBT World
+https://cdn-edge.iiptvcdn.com/live_event/smil:d36f-93c1-9c58-fdcc-427f.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="One31.th@SD" group-title="TH | General",One31
+https://bcovlive-a.akamaihd.net/b6603a14ea59440a95e9235e14bc9332/ap-southeast-1/6415628290001/9c3d7fc7d10840a69e48b5939ae886e0/playlist_ssaiM.m3u8
+#EXTINF:-1 tvg-id="PoliceTV.th@SD" group-title="TH | Public",Police TV
+https://cdn-th-vip.livestreaming.in.th/policetv/policetv/playlist.m3u8
+#EXTINF:-1 tvg-id="RamaChannel.th@SD" group-title="TH | Education",Rama Channel
+https://ramach.ddns.net/live/ramalive/index.m3u8
+#EXTINF:-1 tvg-id="SBBTV.th@SD" group-title="TH | General",SBB TV
+https://cdn-th-vip2.livestreaming.in.th/watsanghathan/watsanghathan/playlist.m3u8
+#EXTINF:-1 tvg-id="STOUChannel.th@SD" group-title="TH | Education",STOU Channel
+https://stream1.stou.ac.th/live/stou_720p/playlist.m3u8
+#EXTINF:-1 tvg-id="SuwannabhumiChannel.th@SD" group-title="TH | General",Suwannabhumi Channel
+https://live.bangkokstream.com:19360/suwannabhumi/suwannabhumi.m3u8
+#EXTINF:-1 tvg-id="ThaiChaiyo.th@SD" group-title="TH | General",Thai Chaiyo
+https://live.thaichaiyo.tv/tcy/live-transmux.m3u8
+#EXTINF:-1 tvg-id="ThaiParliamentTelevision.th@SD" group-title="TH | Public",Thai Parliament TV
+https://tv-live.tpchannel.org/live/tv.m3u8
+#EXTINF:-1 tvg-id="ThaiPBS.th@SD" group-title="TH | Public",Thai PBS
+https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
+#EXTINF:-1 tvg-id="ThairathTV.th@SD" group-title="TH | News",Thairath TV
+https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8
+#EXTINF:-1 tvg-id="TopNews.th@SD" group-title="TH | News",Top News
+https://live.topnews.co.th/hls/topnews_a_720.m3u8
+#EXTINF:-1 tvg-id="TVMuslimThailand.th@SD" group-title="TH | General",TV Muslim Thailand
+https://vdo.plathong.net/tvmuslim/tvmuslim/playlist.m3u8
+#EXTINF:-1 tvg-id="VipaTV.th@SD" group-title="TH | General",Vipa TV
+https://fastly.live.brightcove.com/1846248737588002042/ap-southeast-1/6075037809001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoibzRoaGc2LmVncmVzcy5zYjBmOGsiLCJhY2NvdW50X2lkIjoiNjA3NTAzNzgwOTAwMSIsImVobiI6ImZhc3RseS5saXZlLmJyaWdodGNvdmUuY29tIiwiaXNzIjoiYmxpdmUtcGxheWJhY2stc291cmNlLWFwaSIsInN1YiI6InBhdGhtYXB0b2tlbiIsImF1ZCI6WyI2MDc1MDM3ODA5MDAxIl0sImp0aSI6IjE4NDYyNDg3Mzc1ODgwMDIwNDIifQ.HbjGHxGv87ivAdsCtAdEDjj2SVCfRnCUMYWn2fCkVPY/playlist-hls.m3u8
+#EXTINF:-1 tvg-id="WorkpointTV.th@SD" group-title="TH | General",Workpoint TV
+https://lb1-live-mv.v2h-cdn.com/hls/ffcb/gbinrvp/gbinrvp.m3u8
+#EXTINF:-1 tvg-id="ZabbChannel.th@SD" group-title="TH | General",Zabb Channel
+https://vdo.plathong.net/flash7057/flash7057/playlist.m3u8
+#EXTINF:-1 tvg-id="ZeeNung.th@SD" group-title="TH | General",Zee Nung [Geo]
+https://amg17931-zee-amg17931c4-samsung-th-5592.playouts.now.amagi.tv/playlist/amg17931-asiatvusaltdfast-zeenung-samsungth/playlist.m3u8
+#EXTINF:-1 tvg-id="NBTTVChiangMai.th@SD" group-title="TH | Regional",NBT TV Chiang Mai
+https://cdn-edge.iiptvcdn.com/live_event/smil:4f6e-aa34-2034-5492-c82d.smil/playlist.m3u8
 
 #EXTINF:-1 tvg-id="PBSKids.us" group-title="KIDS | English",PBS Kids
 https://livestream.pbskids.org/out/v1/14507d931bbe48a69287e4850e53443c/est.m3u8
-
 #EXTINF:-1 tvg-id="KidoodleTV.ca" group-title="KIDS | English",Kidoodle.TV
 https://amg07653-apmc-amg07653c9-samsung-us-8740.playouts.now.amagi.tv/playlist.m3u8
-
 #EXTINF:-1 tvg-id="MoonbugKids.uk" group-title="KIDS | English",Moonbug Kids
 https://moonbug-rokuus.amagi.tv/playlist.m3u8
-
 #EXTINF:-1 tvg-id="BabySharkTV.us" group-title="KIDS | English",Baby Shark TV
 https://c0c65b821b3542c3a4dca92702f59944.mediatailor.us-east-1.amazonaws.com/v1/master/04fd913bb278d8775298c26fdca9d9841f37601f/RakutenTV-eu_BabySharkTV/playlist.m3u8
-
 #EXTINF:-1 tvg-id="RyanandFriends.us" group-title="KIDS | English",Ryan and Friends
 https://ryanandfriends-samsungau.amagi.tv/playlist.m3u8
-
 #EXTINF:-1 tvg-id="KartoonChannel.us" group-title="KIDS | English",Kartoon Channel!
 https://d2z0ysa6dgxhlc.cloudfront.net/kchan.m3u8
-
-#EXTINF:-1 tvg-id="TinyPop.uk" group-title="KIDS | English",Tiny Pop [Geo may apply]
+#EXTINF:-1 tvg-id="TinyPop.uk" group-title="KIDS | English",Tiny Pop [Geo]
 https://amg01753-narrativeuk-amg01753c1-lg-gb-1830.playouts.now.amagi.tv/playlist/amg01753-narrativeuk-tinypop-lggb/playlist.m3u8
-
-#EXTINF:-1 tvg-id="Pop.uk" group-title="KIDS | English",POP [Geo may apply]
+#EXTINF:-1 tvg-id="Pop.uk" group-title="KIDS | English",POP [Geo]
 https://amg01753-amg01753c6-samsung-au-6678.playouts.now.amagi.tv/playlist.m3u8
-
 #EXTINF:-1 tvg-id="KidsFlix.us" group-title="KIDS | English",KidsFlix
 https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=50
-
 #EXTINF:-1 tvg-id="ToonGoggles.us" group-title="KIDS | English",Toon Goggles
 https://weyyak-live.akamaized.net/weyyak_toon_goggles_ww/index.m3u8
-
 #EXTINF:-1 tvg-id="BatteryPop.us" group-title="KIDS | English",Battery Pop
 https://dai2.xumo.com/amagi_hls_data_xumo1212A-redboxbatterypop/CDN/playlist.m3u8
-
 #EXTINF:-1 tvg-id="Kabillion.us" group-title="KIDS | English",Kabillion
 https://dai2.xumo.com/amagi_hls_data_xumo1212A-redboxkabillion/CDN/playlist.m3u8
