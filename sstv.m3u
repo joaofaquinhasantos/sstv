@@ -124,7 +124,7 @@ https://live-us1.thaimomo.com/live-as/chworkpointt-3/playlist.m3u8
 #EXTINF:-1 tvg-id="True4U.th@SD" tvg-chno="24" group-title="Thailand",True4U
 https://live-us1.thaimomo.com/live-as/chTrue4u-2/playlist.m3u8
 #EXTINF:-1 tvg-id="GMM25.th@SD" tvg-chno="25" group-title="Thailand",GMM25
-https://bcovlive-a.akamaihd.net/57d4bf695e80436d9335f4f50adbe438/ap-southeast-1/6415628290001/7e85dc4a59904e45b4fdffebd62e1d82/playlist_ssaiM.m3u8
+https://live-us1.thaimomo.com/live-as/chgmmchannel-3/playlist.m3u8
 #EXTINF:-1 tvg-id="Channel8.th@SD" tvg-chno="27" group-title="Thailand",Channel 8
 https://live-us1.thaimomo.com/live-as/cheight-3/playlist.m3u8
 #EXTINF:-1 tvg-id="MONO29.th@SD" tvg-chno="29" group-title="Thailand",MONOMAX SPORTS TV 29
@@ -132,7 +132,7 @@ https://live-us1.thaimomo.com/live-as/chmono29-2/playlist.m3u8
 #EXTINF:-1 tvg-id="MCOTHD.th@HD" tvg-chno="30" group-title="Thailand",9 MCOT HD
 https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="One31.th@SD" tvg-chno="31" group-title="Thailand",One31
-https://bcovlive-a.akamaihd.net/b6603a14ea59440a95e9235e14bc9332/ap-southeast-1/6415628290001/9c3d7fc7d10840a69e48b5939ae886e0/playlist_ssaiM.m3u8
+https://live-us1.thaimomo.com/live-as/chone-3/playlist.m3u8
 #EXTINF:-1 tvg-id="ThairathTV.th@SD" tvg-chno="32" group-title="Thailand",Thairath TV
 https://live-us1.thaimomo.com/live-as/chthairathhd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="3HD.th@SD" tvg-chno="33" group-title="Thailand",3HD
