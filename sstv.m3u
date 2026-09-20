@@ -135,7 +135,7 @@ https://lb1-live-mv.v2h-cdn.com/hls/ffcb/gbinrvp/gbinrvp.m3u8
 
 #EXTINF:-1 tvg-id="pptvhd36.th" tvg-name="PPTV HD 36" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/PPTV_HD_36_Logo.svg/640px-PPTV_HD_36_Logo.svg.png" group-title="Thailand",PPTV HD 36
 #EXTVLCOPT:http-user-agent=Mozilla/5.0
-https://freelive2.inwstream.com:1936/freelive-edge/pptvhd/chunks.m3u8
+https://edge6a.v2h-cdn.com/pptv/pptv.stream/playlist.m3u8
 
 # === KIDS — ENGLISH ===
 #EXTINF:-1 tvg-id="PBSKids.us" group-title="KIDS | English",PBS Kids
