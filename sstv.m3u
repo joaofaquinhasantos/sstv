@@ -103,37 +103,46 @@ https://streaming-live.rtp.pt/liverepeater/smil:rtpafrica.smil/playlist.m3u8
 https://www.youtube.com/euronewspt/live
 
 # === THAILAND ===
-#EXTINF:-1 tvg-id="Channel5.th@SD" group-title="Thailand",Channel 5
-https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8
-#EXTINF:-1 tvg-id="Channel7.th@SD" group-title="Thailand",Channel 7
-https://lb1-live-mv.v2h-cdn.com/hls/ffac/gohg/gohg.m3u8
-#EXTINF:-1 tvg-id="Channel8.th@SD" group-title="Thailand",Channel 8 [Geo]
-https://prsmedia-mykojh.cdn.byteark.com/fleetstream/live/720p/index.m3u8
-#EXTINF:-1 tvg-id="CharoenCable37TV.th@SD" group-title="Thailand",Charoen Cable 37 TV
-http://www5.cabletv.co.th/StreamToCTV/cablechannel/playlist.m3u8
-#EXTINF:-1 tvg-id="GMM25.th@SD" group-title="Thailand",GMM25
-https://bcovlive-a.akamaihd.net/57d4bf695e80436d9335f4f50adbe438/ap-southeast-1/6415628290001/7e85dc4a59904e45b4fdffebd62e1d82/playlist_ssaiM.m3u8
-#EXTINF:-1 tvg-id="MCOTHD.th@HD" group-title="Thailand",9 MCOT HD
-https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="MONO29.th@SD" group-title="Thailand",MONO29
-https://lb1-live-mv.v2h-cdn.com/hls/ffbc/ffolvgdhk/ffolvgdhk.m3u8
-#EXTINF:-1 tvg-id="NationTV.th@SD" group-title="Thailand",Nation TV
-https://nationtv-1jdcjo.cdn.byteark.com/fleetstream/nationtvlive/index.m3u8
-#EXTINF:-1 tvg-id="NBT2HD.th@SD" group-title="Thailand",NBT 2HD
+# Main national digital TV channels only. Regional/local channels excluded.
+
+#EXTINF:-1 tvg-id="NBT2HD.th@SD" tvg-chno="2" group-title="Thailand",NBT 2HD
 https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="NBTWorld.th@SD" group-title="Thailand",NBT World
-https://cdn-edge.iiptvcdn.com/live_event/smil:d36f-93c1-9c58-fdcc-427f.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="One31.th@SD" group-title="Thailand",One31
-https://bcovlive-a.akamaihd.net/b6603a14ea59440a95e9235e14bc9332/ap-southeast-1/6415628290001/9c3d7fc7d10840a69e48b5939ae886e0/playlist_ssaiM.m3u8
-#EXTINF:-1 tvg-id="ThaiPBS.th@SD" group-title="Thailand",Thai PBS
+#EXTINF:-1 tvg-id="ThaiPBS.th@SD" tvg-chno="3" group-title="Thailand",Thai PBS
 https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
-#EXTINF:-1 tvg-id="ThairathTV.th@SD" group-title="Thailand",Thairath TV
-https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8
-#EXTINF:-1 tvg-id="WorkpointTV.th@SD" group-title="Thailand",Workpoint TV
-https://lb1-live-mv.v2h-cdn.com/hls/ffcb/gbinrvp/gbinrvp.m3u8
-
-
-#EXTINF:-1 tvg-id="pptvhd36.th" tvg-name="PPTV HD 36" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/PPTV_HD_36_Logo.svg/640px-PPTV_HD_36_Logo.svg.png" group-title="Thailand",PPTV HD 36
+#EXTINF:-1 tvg-id="Channel5.th@SD" tvg-chno="5" group-title="Thailand",Channel 5 HD
+https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8
+#EXTINF:-1 tvg-id="TSports7.th@SD" tvg-chno="7" group-title="Thailand",T Sports 7
+https://live-us1.thaimomo.com/live-as/chtsport-1/playlist.m3u8
+#EXTINF:-1 tvg-id="TPTV.th@SD" tvg-chno="10" group-title="Thailand",TPTV
+https://tv-live.tpchannel.org/live/tv.m3u8
+#EXTINF:-1 tvg-id="TNN16.th@SD" tvg-chno="16" group-title="Thailand",TNN16
+https://live-us1.thaimomo.com/live-as/chtnn24-2/playlist.m3u8
+#EXTINF:-1 tvg-id="NationTV.th@SD" tvg-chno="22" group-title="Thailand",Nation TV
+https://live-us1.thaimomo.com/live-as/chNation-3/playlist.m3u8
+#EXTINF:-1 tvg-id="WorkpointTV.th@SD" tvg-chno="23" group-title="Thailand",Workpoint TV
+https://live-us1.thaimomo.com/live-as/chworkpointt-3/playlist.m3u8
+#EXTINF:-1 tvg-id="True4U.th@SD" tvg-chno="24" group-title="Thailand",True4U
+https://live-us1.thaimomo.com/live-as/chTrue4u-2/playlist.m3u8
+#EXTINF:-1 tvg-id="GMM25.th@SD" tvg-chno="25" group-title="Thailand",GMM25
+https://bcovlive-a.akamaihd.net/57d4bf695e80436d9335f4f50adbe438/ap-southeast-1/6415628290001/7e85dc4a59904e45b4fdffebd62e1d82/playlist_ssaiM.m3u8
+#EXTINF:-1 tvg-id="Channel8.th@SD" tvg-chno="27" group-title="Thailand",Channel 8
+https://live-us1.thaimomo.com/live-as/cheight-3/playlist.m3u8
+#EXTINF:-1 tvg-id="MONO29.th@SD" tvg-chno="29" group-title="Thailand",MONOMAX SPORTS TV 29
+https://live-us1.thaimomo.com/live-as/chmono29-2/playlist.m3u8
+#EXTINF:-1 tvg-id="MCOTHD.th@HD" tvg-chno="30" group-title="Thailand",9 MCOT HD
+https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="One31.th@SD" tvg-chno="31" group-title="Thailand",One31
+https://bcovlive-a.akamaihd.net/b6603a14ea59440a95e9235e14bc9332/ap-southeast-1/6415628290001/9c3d7fc7d10840a69e48b5939ae886e0/playlist_ssaiM.m3u8
+#EXTINF:-1 tvg-id="ThairathTV.th@SD" tvg-chno="32" group-title="Thailand",Thairath TV
+https://live-us1.thaimomo.com/live-as/chthairathhd-3/playlist.m3u8
+#EXTINF:-1 tvg-id="3HD.th@SD" tvg-chno="33" group-title="Thailand",3HD
+https://live-us1.thaimomo.com/live-as/ch3hd-3/playlist.m3u8
+#EXTINF:-1 tvg-id="AmarinTV.th@SD" tvg-chno="34" group-title="Thailand",Amarin TV 34
+https://live-us1.thaimomo.com/live-as/chamarin-3/playlist.m3u8
+#EXTINF:-1 tvg-id="Channel7.th@SD" tvg-chno="35" group-title="Thailand",Channel 7 HD
+#EXTVLCOPT:http-referrer=https://www.ch7.com/
+https://live-cdn.ch7.com/out/v1/eafeb02c55b64a15b278b1e66c7fc776/playlist_9.m3u8
+#EXTINF:-1 tvg-id="pptvhd36.th" tvg-name="PPTV HD 36" tvg-chno="36" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/PPTV_HD_36_Logo.svg/640px-PPTV_HD_36_Logo.svg.png" group-title="Thailand",PPTV HD 36
 #EXTVLCOPT:http-user-agent=Mozilla/5.0
 https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_access_id=fleet-2966&x_ark_auth_type=ark-v2&x_ark_expires=1789901401&x_ark_path_prefix=%2Fbamm-csai%2F&x_ark_signature=RGGLFu1hmVHa57oyqSmjGg
 
