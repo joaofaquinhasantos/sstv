@@ -135,7 +135,7 @@ https://lb1-live-mv.v2h-cdn.com/hls/ffcb/gbinrvp/gbinrvp.m3u8
 
 #EXTINF:-1 tvg-id="pptvhd36.th" tvg-name="PPTV HD 36" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/PPTV_HD_36_Logo.svg/640px-PPTV_HD_36_Logo.svg.png" group-title="Thailand",PPTV HD 36
 #EXTVLCOPT:http-user-agent=Mozilla/5.0
-https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_acce
+https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_access_id=fleet-2966&x_ark_auth_type=ark-v2&x_ark_expires=1789901401&x_ark_path_prefix=%2Fbamm-csai%2F&x_ark_signature=RGGLFu1hmVHa57oyqSmjGg
 
 # === KIDS — ENGLISH ===
 #EXTINF:-1 tvg-id="PBSKids.us" group-title="KIDS | English",PBS Kids
