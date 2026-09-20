@@ -134,6 +134,9 @@ https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8
 #EXTINF:-1 tvg-id="WorkpointTV.th@SD" group-title="Thailand",Workpoint TV
 https://lb1-live-mv.v2h-cdn.com/hls/ffcb/gbinrvp/gbinrvp.m3u8
 
+#EXTINF:-1 tvg-id="PPTVHD36.th" group-title="Thailand",PPTV HD 36
+https://ctrl.laotv.la/live/PPTVHD/index.m3u8
+
 # === KIDS — ENGLISH ===
 #EXTINF:-1 tvg-id="PBSKids.us" group-title="KIDS | English",PBS Kids
 https://livestream.pbskids.org/out/v1/14507d931bbe48a69287e4850e53443c/est.m3u8
