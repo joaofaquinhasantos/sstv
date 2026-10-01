@@ -101,6 +101,14 @@ https://streaming-live.rtp.pt/liverepeater/smil:rtpafrica.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Euronews em Português" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Euronews_2022.svg/500px-Euronews_2022.svg.png" tvg-id="EuronewsPortuguese.fr" tvg-chno="17" tvg-country="PT" group-title="Portugal",Euronews em Português Ⓨ
 https://www.youtube.com/euronewspt/live
 
+#EXTINF:-1 tvg-name="AXN" tvg-id="AXN.pt" tvg-country="PT" group-title="Portugal",AXN
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36
+http://znty.dyndns.org:5010/hls/axn.m3u8
+
+#EXTINF:-1 tvg-name="Star Channel" tvg-id="StarChannel.pt" tvg-country="PT" group-title="Portugal",Star Channel
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36
+http://znty.dyndns.org:5010/hls/fox.m3u8
+
 # === SPORTS | PORTUGAL ===
 #EXTINF:-1 tvg-id="Canal11.pt" group-title="SPORTS | Portugal",Canal 11 Internacional
 https://dy4isoelz3s0x.cloudfront.net/0_hd.m3u8
