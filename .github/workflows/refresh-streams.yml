@@ -24,10 +24,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Refresh selected backup feeds and check fragile streams
+      - name: Refresh selected feeds and check fragile streams
         shell: bash
         run: |
           python - <<'PY'
+          import html
           import re
           import ssl
           import urllib.request
@@ -36,6 +37,7 @@ jobs:
 
           PLAYLIST = Path("sstv.m3u")
           HERBERT = "https://raw.githubusercontent.com/HerbertHe/iptv-sources/gh-pages/all.m3u"
+          PPTV_API = "https://www-live.pptvhd36.com/api/live_player/program/1"
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
           ctx = ssl.create_default_context()
 
@@ -86,6 +88,38 @@ jobs:
               return entries
 
           text = PLAYLIST.read_text(encoding="utf-8")
+          changed = []
+
+          # PPTV uses a short-lived signed URL. Refresh it from PPTV's own player API.
+          try:
+              _, _, body = fetch_text(
+                  PPTV_API,
+                  timeout=20,
+                  extra_headers={"Referer": "https://www.pptvhd36.com/live"},
+              )
+              body = html.unescape(body).replace("\\/", "/")
+              m = re.search(
+                  r"https://pptv36-9h0yba\.cdn\.byteark\.com/bamm-csai/playlist\.m3u8[^'\"<>\n\r ]+",
+                  body,
+              )
+              if m:
+                  candidate = m.group(0)
+                  pattern = re.compile(
+                      r'(#EXTINF:[^\n]*PPTV HD 36[^\n]*\n(?:#EXTVLCOPT:[^\n]*\n)*)(https?://[^\n]+)',
+                      re.I,
+                  )
+                  pm = pattern.search(text)
+                  if pm:
+                      current = pm.group(2).strip()
+                      if current != candidate:
+                          text = text[:pm.start(2)] + candidate + text[pm.end(2):]
+                          changed.append("PPTV HD 36 signed URL refreshed")
+                  else:
+                      print("::warning::PPTV entry not found")
+              else:
+                  print("::warning::PPTV API returned no signed stream URL")
+          except Exception as e:
+              print(f"::warning::PPTV refresh failed: {e}")
 
           # These are backup entries only. HerbertHe regenerates its list every two hours,
           # so when an exact channel-name URL changes there, mirror that change here.
@@ -105,7 +139,6 @@ jobs:
           except Exception as e:
               print(f"::warning::Could not fetch HerbertHe source: {e}")
 
-          changed = []
           for source_name, local_name in source_map.items():
               candidates = [u for n, _, u in upstream_entries if n.casefold() == source_name.casefold()]
               if not candidates:
@@ -123,10 +156,11 @@ jobs:
               current = m.group(2).strip()
               if current != candidate:
                   text = text[:m.start(2)] + candidate + text[m.end(2):]
-                  changed.append(f"{local_name}: {current} -> {candidate}")
+                  changed.append(f"{local_name} URL refreshed")
 
-          # Build targeted health checks. SPORT TV URLs already present in the playlist are
-          # checked every run. This detects recovery/failure without inventing new providers.
+          # SPORT TV URLs already present in the playlist are checked every run.
+          # If those supplied URLs recover or redirect, the check detects it; no unrelated
+          # provider is substituted automatically.
           checks = []
           sport_pattern = re.compile(
               r'#EXTINF:[^\n]*,(Sport TV(?:1|2|5|6|7|\+))\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
@@ -148,7 +182,6 @@ jobs:
               if m:
                   checks.append((channel, m.group(1).strip(), None))
 
-          # Channel 7 requires its referrer, so test it with the same header the playlist uses.
           ch7 = re.search(
               r'#EXTINF:[^\n]*,Channel 7 HD\s*\n#EXTVLCOPT:http-referrer=([^\n]+)\n(https?://[^\n]+)',
               text,
@@ -157,8 +190,6 @@ jobs:
           if ch7:
               checks.append(("Channel 7 HD", ch7.group(2).strip(), {"Referer": ch7.group(1).strip()}))
 
-          # Also check the auto-refreshed backup endpoints, but a temporary connectivity
-          # failure does not erase a known backup URL.
           for _, local_name in source_map.items():
               pattern = re.compile(
                   rf'#EXTINF:[^\n]*,{re.escape(local_name)}\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
@@ -184,14 +215,14 @@ jobs:
 
           if changed:
               PLAYLIST.write_text(text, encoding="utf-8")
-              print("Updated backup URLs:")
+              print("Updated playlist URLs:")
               for item in changed:
                   print(" -", item)
           else:
-              print("No backup URL changes needed")
+              print("No URL changes needed")
           PY
 
-      - name: Commit refreshed backup URLs
+      - name: Commit refreshed URLs
         shell: bash
         run: |
           if git diff --quiet -- sstv.m3u; then
@@ -201,6 +232,6 @@ jobs:
           git config user.name "sstv-bot"
           git config user.email "actions@users.noreply.github.com"
           git add sstv.m3u
-          git commit -m "Refresh IPTV backup URLs"
+          git commit -m "Refresh IPTV stream URLs"
           git pull --rebase origin main
           git push
