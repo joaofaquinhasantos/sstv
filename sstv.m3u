@@ -2,7 +2,7 @@
 #PLAYLIST:SSTV - France Portugal Thailand Kids
 # NOTE: User-filtered playlist.
 # NOTE: Geo-blocked or tokenized channels may not play in Thailand or in IBO Player.
-# REVISION: 2026-09-08-refresh-1
+# REVISION: 2026-10-01-portugal-backups
 
 # === FRANCE ===
 #EXTINF:-1 tvg-name="Arte" tvg-logo="https://api-cdn.arte.tv/img/v2/image/j4EoSJjX26uySVWdmt3EmS/1920x1080" tvg-id="ARTEFrench.fr" tvg-chno="7" tvg-country="FR" group-title="France",Arte Ⓖ
@@ -93,7 +93,7 @@ https://streaming-live.rtp.pt/liverepeater/smil:rtpmem.smil/playlist.m3u8
 https://streaming-live.rtp.pt/liverepeater/smil:rtpi.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Porto Canal" tvg-logo="https://i.imgur.com/wsyvP2H.png" tvg-id="PortoCanal.pt" tvg-chno="11" tvg-country="PT" group-title="Portugal",Porto Canal Ⓢ
 https://pull-live-156-1.global.ssl.fastly.net/pc5865dc25400thmb-ea6bf03b14fa318f7133/smil:pc1-jhrgyuoqe5865db-68tkgb14fa318f7133f03.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="ADtv" tvg-logo="https://i.imgur.com/FvlcU3z.png" tvg-id="" tvg-chno="12" tvg-country="PT" group-title="Portugal",ADtv Ⓢ
+#EXTINF:-1 tvg-name="ARTV" tvg-logo="https://i.imgur.com/FvlcU3z.png" tvg-id="ARTV.pt" tvg-chno="12" tvg-country="PT" group-title="Portugal",ARTV Ⓢ
 https://playout172.livextend.cloud/liveiframe/_definst_/ngrp:liveartvabr_abr/playlist.m3u8
 #EXTINF:-1 tvg-name="CNN Portugal" tvg-logo="https://i.imgur.com/NYH39xs.png" tvg-id="CNNPortugal.pt" tvg-chno="13" tvg-country="PT" group-title="Portugal",CNN Portugal
 https://github.com/LITUATUI/M3UPT/raw/main/M3U/CNN_Portugal.m3u8
@@ -117,6 +117,19 @@ https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8
 #EXTINF:-1 tvg-id="RedBullTV.at" group-title="SPORTS | Portugal",Red Bull TV
 https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
+
+# === PORTUGAL | BACKUPS ===
+# Backup feeds sourced from HerbertHe/iptv-sources generated list (2026-10-01). Primary direct feeds above remain preferred.
+#EXTINF:-1 tvg-id="ARTV.pt" group-title="Portugal | Backup",ARTV (Backup)
+https://stream1.freetv.fun/7646a0d0ccae6a57d422cacf8d62ea79acad305b6a22f8a798475eb0ebe41656.m3u8
+#EXTINF:-1 tvg-id="RTPAcores.pt" group-title="Portugal | Backup",RTP Açores (Backup)
+https://stream1.freetv.fun/ba3972cec6c78f7af5d7ea58fe8a7a9e4714479ebdb0ff731490b853f8e0b840.m3u8
+#EXTINF:-1 tvg-id="RTPMadeira.pt" group-title="Portugal | Backup",RTP Madeira (Backup)
+https://stream1.freetv.fun/1a45d128405ecbdd1f5cb5997c9f82bbbfb2fac6b8ef553e605a6c3ab1b9c91c.m3u8
+#EXTINF:-1 tvg-id="Canal11.pt" group-title="SPORTS | Portugal Backup",Canal 11 (Backup)
+https://stream1.freetv.fun/5fba83c6aa4d4d1f1dad2d00f354256eadb82a914885d7d2c87ad5afe7fcd069.m3u8
+#EXTINF:-1 tvg-id="FUELTV.pt@EMEA" group-title="SPORTS | Portugal Backup",FUEL TV Portugal (Backup)
+https://stream1.freetv.fun/21aed66bf99177054d47f5b6ec9a4cac914853ed862c8b71d8324d92a9f12250.m3u8
 
 # === THAILAND ===
 # Main national digital TV channels only. Regional/local channels excluded.
@@ -178,7 +191,7 @@ https://d2z0ysa6dgxhlc.cloudfront.net/kchan.m3u8
 #EXTINF:-1 tvg-id="TinyPop.uk" group-title="KIDS | English",Tiny Pop [Geo]
 https://amg01753-narrativeuk-amg01753c1-lg-gb-1830.playouts.now.amagi.tv/playlist/amg01753-narrativeuk-tinypop-lggb/playlist.m3u8
 #EXTINF:-1 tvg-id="Pop.uk" group-title="KIDS | English",POP [Geo]
-https://amg01753-amg01753c6-samsung-au-6678.playouts.now.amagi.tv/playlist.m3u8
+https://amg01753-amg01753c6-samsung-au-6678.playouts.now.amagi.tv/playlist/amg01753-amg01753c6-samsung-au-6678/playlist.m3u8
 #EXTINF:-1 tvg-id="KidsFlix.us" group-title="KIDS | English",KidsFlix
 https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=50
 #EXTINF:-1 tvg-id="ToonGoggles.us" group-title="KIDS | English",Toon Goggles
