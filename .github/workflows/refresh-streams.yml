@@ -1,0 +1,193 @@
+name: Refresh IPTV backup streams
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/refresh-streams.yml"
+  schedule:
+    - cron: "37 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sstv-stream-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refresh selected backup feeds and check fragile streams
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          import ssl
+          import urllib.error
+          import urllib.request
+          from pathlib import Path
+
+          PLAYLIST = Path("sstv.m3u")
+          HERBERT = "https://raw.githubusercontent.com/HerbertHe/iptv-sources/gh-pages/all.m3u"
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
+
+          ctx = ssl.create_default_context()
+
+          def fetch_text(url, timeout=20, max_bytes=512_000):
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent": UA,
+                      "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                  data = r.read(max_bytes)
+                  return r.geturl(), r.status, data.decode("utf-8", "ignore")
+
+          def healthy(url):
+              try:
+                  final, status, body = fetch_text(url, timeout=12, max_bytes=128_000)
+                  if not (200 <= status < 400):
+                      return False, f"HTTP {status}", final
+                  low = body.lower()
+                  # HLS manifests should normally identify themselves. Some relays return
+                  # a tiny redirect/loader body, so a successful m3u8 URL is also accepted.
+                  ok = "#extm3u" in low or ".m3u8" in final.lower() or ".m3u8" in url.lower()
+                  return ok, ("ok" if ok else "unexpected response"), final
+              except Exception as e:
+                  return False, f"{type(e).__name__}: {e}", url
+
+          def parse_m3u(text):
+              entries = []
+              lines = text.splitlines()
+              i = 0
+              while i < len(lines):
+                  line = lines[i].strip()
+                  if line.startswith("#EXTINF:"):
+                      meta = line
+                      j = i + 1
+                      while j < len(lines) and lines[j].strip().startswith("#"):
+                          j += 1
+                      if j < len(lines):
+                          url = lines[j].strip()
+                          if url and not url.startswith("#"):
+                              m = re.search(r'tvg-name="([^"]+)"', meta, re.I)
+                              tvg_name = m.group(1).strip() if m else ""
+                              display = meta.rsplit(",", 1)[-1].strip() if "," in meta else ""
+                              entries.append((tvg_name, display, url))
+                      i = j
+                  i += 1
+              return entries
+
+          text = PLAYLIST.read_text(encoding="utf-8")
+
+          # Refresh only the backup entries we deliberately created from HerbertHe's
+          # generated list. Primary/direct feeds are intentionally left untouched.
+          source_map = {
+              "ARTV": "ARTV (Backup)",
+              "RTP Acores": "RTP Açores (Backup)",
+              "RTP Madeira": "RTP Madeira (Backup)",
+              "CANAL 11": "Canal 11 (Backup)",
+              "Fuel TV Portugal": "FUEL TV Portugal (Backup)",
+          }
+
+          try:
+              _, _, upstream = fetch_text(HERBERT, timeout=25)
+              upstream_entries = parse_m3u(upstream)
+          except Exception as e:
+              upstream_entries = []
+              print(f"::warning::Could not fetch HerbertHe source: {e}")
+
+          changed = []
+          for source_name, local_name in source_map.items():
+              candidates = [u for n, d, u in upstream_entries if n.casefold() == source_name.casefold()]
+              if not candidates:
+                  print(f"::warning::No upstream candidate found for {source_name}")
+                  continue
+
+              candidate = candidates[0]
+              ok, reason, final = healthy(candidate)
+              if not ok:
+                  print(f"::warning::Candidate failed validation for {source_name}: {reason}")
+                  continue
+
+              pattern = re.compile(
+                  rf'(#EXTINF:[^\n]*,{re.escape(local_name)}\s*\n(?:#EXTVLCOPT:[^\n]*\n)*)(https?://[^\n]+)',
+                  re.I,
+              )
+              m = pattern.search(text)
+              if not m:
+                  print(f"::warning::Local backup entry not found: {local_name}")
+                  continue
+
+              current = m.group(2).strip()
+              if current != candidate:
+                  text = text[:m.start(2)] + candidate + text[m.end(2):]
+                  changed.append(f"{local_name}: {current} -> {candidate}")
+
+          # SPORT TV: monitor the URLs already supplied in this playlist. We do not
+          # auto-discover a different provider; if an existing URL starts redirecting,
+          # the health check follows that redirect for validation.
+          sport_pattern = re.compile(
+              r'#EXTINF:[^\n]*,(Sport TV(?:1|2|5|6|7|\+))\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
+              re.I,
+          )
+          for name, url in sport_pattern.findall(text):
+              ok, reason, final = healthy(url.strip())
+              if ok:
+                  suffix = f" -> {final}" if final != url.strip() else ""
+                  print(f"SPORT CHECK OK: {name}: {url.strip()}{suffix}")
+              else:
+                  print(f"::warning::SPORT CHECK FAILED: {name}: {url.strip()} ({reason})")
+
+          # Other fragile feeds worth watching. These are checks only; direct/official
+          # feeds are not replaced automatically by third-party relays.
+          watch_names = [
+              "TVI", "CNN Portugal", "Porto Canal", "Canal 11 Internacional",
+              "FUEL TV", "PPTV HD 36", "Channel 7 HD", "T Sports 7",
+          ]
+          for channel in watch_names:
+              pattern = re.compile(
+                  rf'#EXTINF:[^\n]*,{re.escape(channel)}(?:\s*[^\n]*)?\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
+                  re.I,
+              )
+              m = pattern.search(text)
+              if not m:
+                  continue
+              url = m.group(1).strip()
+              ok, reason, _ = healthy(url)
+              if ok:
+                  print(f"HEALTH OK: {channel}: {url}")
+              else:
+                  print(f"::warning::HEALTH FAILED: {channel}: {url} ({reason})")
+
+          if changed:
+              PLAYLIST.write_text(text, encoding="utf-8")
+              print("Updated backup URLs:")
+              for item in changed:
+                  print(" -", item)
+          else:
+              print("No backup URL changes needed")
+          PY
+
+      - name: Commit refreshed backup URLs
+        shell: bash
+        run: |
+          if git diff --quiet -- sstv.m3u; then
+            echo "No playlist URL changes"
+            exit 0
+          fi
+          git config user.name "sstv-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sstv.m3u
+          git commit -m "Refresh IPTV backup URLs"
+          git pull --rebase origin main
+          git push
