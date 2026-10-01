@@ -30,38 +30,36 @@ jobs:
           python - <<'PY'
           import re
           import ssl
-          import urllib.error
           import urllib.request
+          from concurrent.futures import ThreadPoolExecutor, as_completed
           from pathlib import Path
 
           PLAYLIST = Path("sstv.m3u")
           HERBERT = "https://raw.githubusercontent.com/HerbertHe/iptv-sources/gh-pages/all.m3u"
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
-
           ctx = ssl.create_default_context()
 
-          def fetch_text(url, timeout=20, max_bytes=512_000):
-              req = urllib.request.Request(
-                  url,
-                  headers={
-                      "User-Agent": UA,
-                      "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
-                  },
-              )
+          def fetch_text(url, timeout=15, max_bytes=512_000, extra_headers=None):
+              headers = {
+                  "User-Agent": UA,
+                  "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
+              }
+              if extra_headers:
+                  headers.update(extra_headers)
+              req = urllib.request.Request(url, headers=headers)
               with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
                   data = r.read(max_bytes)
                   return r.geturl(), r.status, data.decode("utf-8", "ignore")
 
-          def healthy(url):
+          def healthy(url, headers=None):
               try:
-                  final, status, body = fetch_text(url, timeout=12, max_bytes=128_000)
+                  final, status, body = fetch_text(url, timeout=8, max_bytes=96_000, extra_headers=headers)
                   if not (200 <= status < 400):
                       return False, f"HTTP {status}", final
                   low = body.lower()
-                  # HLS manifests should normally identify themselves. Some relays return
-                  # a tiny redirect/loader body, so a successful m3u8 URL is also accepted.
-                  ok = "#extm3u" in low or ".m3u8" in final.lower() or ".m3u8" in url.lower()
-                  return ok, ("ok" if ok else "unexpected response"), final
+                  if "<html" in low and "#extm3u" not in low:
+                      return False, "HTML response", final
+                  return True, "ok", final
               except Exception as e:
                   return False, f"{type(e).__name__}: {e}", url
 
@@ -89,8 +87,9 @@ jobs:
 
           text = PLAYLIST.read_text(encoding="utf-8")
 
-          # Refresh only the backup entries we deliberately created from HerbertHe's
-          # generated list. Primary/direct feeds are intentionally left untouched.
+          # These are backup entries only. HerbertHe regenerates its list every two hours,
+          # so when an exact channel-name URL changes there, mirror that change here.
+          # Primary/direct feeds above these backups are never overwritten by this job.
           source_map = {
               "ARTV": "ARTV (Backup)",
               "RTP Acores": "RTP Açores (Backup)",
@@ -99,26 +98,20 @@ jobs:
               "Fuel TV Portugal": "FUEL TV Portugal (Backup)",
           }
 
+          upstream_entries = []
           try:
-              _, _, upstream = fetch_text(HERBERT, timeout=25)
+              _, _, upstream = fetch_text(HERBERT, timeout=20)
               upstream_entries = parse_m3u(upstream)
           except Exception as e:
-              upstream_entries = []
               print(f"::warning::Could not fetch HerbertHe source: {e}")
 
           changed = []
           for source_name, local_name in source_map.items():
-              candidates = [u for n, d, u in upstream_entries if n.casefold() == source_name.casefold()]
+              candidates = [u for n, _, u in upstream_entries if n.casefold() == source_name.casefold()]
               if not candidates:
                   print(f"::warning::No upstream candidate found for {source_name}")
                   continue
-
               candidate = candidates[0]
-              ok, reason, final = healthy(candidate)
-              if not ok:
-                  print(f"::warning::Candidate failed validation for {source_name}: {reason}")
-                  continue
-
               pattern = re.compile(
                   rf'(#EXTINF:[^\n]*,{re.escape(local_name)}\s*\n(?:#EXTVLCOPT:[^\n]*\n)*)(https?://[^\n]+)',
                   re.I,
@@ -127,32 +120,24 @@ jobs:
               if not m:
                   print(f"::warning::Local backup entry not found: {local_name}")
                   continue
-
               current = m.group(2).strip()
               if current != candidate:
                   text = text[:m.start(2)] + candidate + text[m.end(2):]
                   changed.append(f"{local_name}: {current} -> {candidate}")
 
-          # SPORT TV: monitor the URLs already supplied in this playlist. We do not
-          # auto-discover a different provider; if an existing URL starts redirecting,
-          # the health check follows that redirect for validation.
+          # Build targeted health checks. SPORT TV URLs already present in the playlist are
+          # checked every run. This detects recovery/failure without inventing new providers.
+          checks = []
           sport_pattern = re.compile(
               r'#EXTINF:[^\n]*,(Sport TV(?:1|2|5|6|7|\+))\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
               re.I,
           )
           for name, url in sport_pattern.findall(text):
-              ok, reason, final = healthy(url.strip())
-              if ok:
-                  suffix = f" -> {final}" if final != url.strip() else ""
-                  print(f"SPORT CHECK OK: {name}: {url.strip()}{suffix}")
-              else:
-                  print(f"::warning::SPORT CHECK FAILED: {name}: {url.strip()} ({reason})")
+              checks.append((f"SPORT {name}", url.strip(), None))
 
-          # Other fragile feeds worth watching. These are checks only; direct/official
-          # feeds are not replaced automatically by third-party relays.
           watch_names = [
               "TVI", "CNN Portugal", "Porto Canal", "Canal 11 Internacional",
-              "FUEL TV", "PPTV HD 36", "Channel 7 HD", "T Sports 7",
+              "FUEL TV", "PPTV HD 36", "T Sports 7",
           ]
           for channel in watch_names:
               pattern = re.compile(
@@ -160,14 +145,42 @@ jobs:
                   re.I,
               )
               m = pattern.search(text)
-              if not m:
-                  continue
-              url = m.group(1).strip()
-              ok, reason, _ = healthy(url)
-              if ok:
-                  print(f"HEALTH OK: {channel}: {url}")
-              else:
-                  print(f"::warning::HEALTH FAILED: {channel}: {url} ({reason})")
+              if m:
+                  checks.append((channel, m.group(1).strip(), None))
+
+          # Channel 7 requires its referrer, so test it with the same header the playlist uses.
+          ch7 = re.search(
+              r'#EXTINF:[^\n]*,Channel 7 HD\s*\n#EXTVLCOPT:http-referrer=([^\n]+)\n(https?://[^\n]+)',
+              text,
+              re.I,
+          )
+          if ch7:
+              checks.append(("Channel 7 HD", ch7.group(2).strip(), {"Referer": ch7.group(1).strip()}))
+
+          # Also check the auto-refreshed backup endpoints, but a temporary connectivity
+          # failure does not erase a known backup URL.
+          for _, local_name in source_map.items():
+              pattern = re.compile(
+                  rf'#EXTINF:[^\n]*,{re.escape(local_name)}\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
+                  re.I,
+              )
+              m = pattern.search(text)
+              if m:
+                  checks.append((local_name, m.group(1).strip(), None))
+
+          with ThreadPoolExecutor(max_workers=10) as pool:
+              futures = {
+                  pool.submit(healthy, url, headers): (name, url)
+                  for name, url, headers in checks
+              }
+              for future in as_completed(futures):
+                  name, url = futures[future]
+                  ok, reason, final = future.result()
+                  if ok:
+                      suffix = f" -> {final}" if final != url else ""
+                      print(f"HEALTH OK: {name}: {url}{suffix}")
+                  else:
+                      print(f"::warning::HEALTH FAILED: {name}: {url} ({reason})")
 
           if changed:
               PLAYLIST.write_text(text, encoding="utf-8")
