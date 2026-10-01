@@ -1,0 +1,91 @@
+name: Trim Popular Sports to Portugal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/trim-popular-sports.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  trim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Keep only Portugal-targeted channels in SPORTS Popular
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('sstv.m3u')
+          text = path.read_text(encoding='utf-8')
+          marker = '# === SPORTS | POPULAR ==='
+          start = text.find(marker)
+          if start < 0:
+              raise SystemExit('SPORTS | POPULAR section not found')
+
+          next_marker = text.find('\n# === ', start + len(marker))
+          end = len(text) if next_marker < 0 else next_marker + 1
+          head = text[:start]
+          section = text[start:end]
+          suffix = text[end:]
+
+          keep = {
+              'FIFA+ Portuguese (720p)',
+              'FUEL TV (1080p)',
+              'Sport TV1',
+              'Sport TV2',
+              'Sport TV5',
+              'Sport TV6',
+              'Sport TV7',
+              'Sport TV+',
+          }
+
+          lines = section.splitlines()
+          kept = [marker, '# Portugal-only channels retained from the user-provided sports list.']
+          i = 1
+          found = []
+          while i < len(lines):
+              line = lines[i]
+              if line.startswith('#EXTINF:'):
+                  name = line.split(',', 1)[1].strip() if ',' in line else ''
+                  block = [line]
+                  i += 1
+                  while i < len(lines) and not lines[i].startswith('#EXTINF:'):
+                      if lines[i].startswith('# === '):
+                          break
+                      if lines[i].strip() and not lines[i].startswith('# User-provided'):
+                          block.append(lines[i])
+                      i += 1
+                  if name in keep:
+                      kept.extend(block)
+                      found.append(name)
+              else:
+                  i += 1
+
+          missing = keep.difference(found)
+          if missing:
+              raise SystemExit(f'Missing expected Portugal entries: {sorted(missing)}')
+
+          new_text = head.rstrip() + '\n\n' + '\n'.join(kept).rstrip() + '\n'
+          if suffix.strip():
+              new_text += '\n' + suffix.lstrip()
+          path.write_text(new_text, encoding='utf-8')
+
+          print('Kept:', ', '.join(found))
+
+      - name: Commit trimmed playlist
+        run: |
+          if git diff --quiet -- sstv.m3u; then
+            echo 'No playlist changes needed.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sstv.m3u
+          git commit -m 'Keep only Portuguese channels in popular sports group'
+          git push
