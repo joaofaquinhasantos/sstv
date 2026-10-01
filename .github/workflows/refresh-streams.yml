@@ -1,4 +1,4 @@
-name: Refresh IPTV backup streams
+name: Maintain IPTV streams
 
 on:
   workflow_dispatch:
@@ -17,14 +17,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  maintain:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Refresh selected feeds and check fragile streams
+      - name: Refresh dynamic feeds and check fragile streams
         shell: bash
         run: |
           python - <<'PY'
@@ -36,12 +36,11 @@ jobs:
           from pathlib import Path
 
           PLAYLIST = Path("sstv.m3u")
-          HERBERT = "https://raw.githubusercontent.com/HerbertHe/iptv-sources/gh-pages/all.m3u"
           PPTV_API = "https://www-live.pptvhd36.com/api/live_player/program/1"
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
           ctx = ssl.create_default_context()
 
-          def fetch_text(url, timeout=15, max_bytes=512_000, extra_headers=None):
+          def fetch_text(url, timeout=15, max_bytes=256_000, extra_headers=None):
               headers = {
                   "User-Agent": UA,
                   "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
@@ -59,38 +58,16 @@ jobs:
                   if not (200 <= status < 400):
                       return False, f"HTTP {status}", final
                   low = body.lower()
-                  if "<html" in low and "#extm3u" not in low:
+                  if "<html" in low and "#extm3u" not in low and "youtube.com" not in url and "dailymotion.com" not in url:
                       return False, "HTML response", final
                   return True, "ok", final
               except Exception as e:
                   return False, f"{type(e).__name__}: {e}", url
 
-          def parse_m3u(text):
-              entries = []
-              lines = text.splitlines()
-              i = 0
-              while i < len(lines):
-                  line = lines[i].strip()
-                  if line.startswith("#EXTINF:"):
-                      meta = line
-                      j = i + 1
-                      while j < len(lines) and lines[j].strip().startswith("#"):
-                          j += 1
-                      if j < len(lines):
-                          url = lines[j].strip()
-                          if url and not url.startswith("#"):
-                              m = re.search(r'tvg-name="([^"]+)"', meta, re.I)
-                              tvg_name = m.group(1).strip() if m else ""
-                              display = meta.rsplit(",", 1)[-1].strip() if "," in meta else ""
-                              entries.append((tvg_name, display, url))
-                      i = j
-                  i += 1
-              return entries
-
           text = PLAYLIST.read_text(encoding="utf-8")
           changed = []
 
-          # PPTV uses a short-lived signed URL. Refresh it from PPTV's own player API.
+          # PPTV uses a short-lived signed URL. Refresh it from PPTV's official player API.
           try:
               _, _, body = fetch_text(
                   PPTV_API,
@@ -121,47 +98,9 @@ jobs:
           except Exception as e:
               print(f"::warning::PPTV refresh failed: {e}")
 
-          # These are backup entries only. HerbertHe regenerates its list every two hours,
-          # so when an exact channel-name URL changes there, mirror that change here.
-          # Primary/direct feeds above these backups are never overwritten by this job.
-          source_map = {
-              "ARTV": "ARTV (Backup)",
-              "RTP Acores": "RTP Açores (Backup)",
-              "RTP Madeira": "RTP Madeira (Backup)",
-              "CANAL 11": "Canal 11 (Backup)",
-              "Fuel TV Portugal": "FUEL TV Portugal (Backup)",
-          }
-
-          upstream_entries = []
-          try:
-              _, _, upstream = fetch_text(HERBERT, timeout=20)
-              upstream_entries = parse_m3u(upstream)
-          except Exception as e:
-              print(f"::warning::Could not fetch HerbertHe source: {e}")
-
-          for source_name, local_name in source_map.items():
-              candidates = [u for n, _, u in upstream_entries if n.casefold() == source_name.casefold()]
-              if not candidates:
-                  print(f"::warning::No upstream candidate found for {source_name}")
-                  continue
-              candidate = candidates[0]
-              pattern = re.compile(
-                  rf'(#EXTINF:[^\n]*,{re.escape(local_name)}\s*\n(?:#EXTVLCOPT:[^\n]*\n)*)(https?://[^\n]+)',
-                  re.I,
-              )
-              m = pattern.search(text)
-              if not m:
-                  print(f"::warning::Local backup entry not found: {local_name}")
-                  continue
-              current = m.group(2).strip()
-              if current != candidate:
-                  text = text[:m.start(2)] + candidate + text[m.end(2):]
-                  changed.append(f"{local_name} URL refreshed")
-
-          # SPORT TV URLs already present in the playlist are checked every run.
-          # If those supplied URLs recover or redirect, the check detects it; no unrelated
-          # provider is substituted automatically.
           checks = []
+
+          # SPORT TV: keep checking the user-supplied endpoints every two hours.
           sport_pattern = re.compile(
               r'#EXTINF:[^\n]*,(Sport TV(?:1|2|5|6|7|\+))\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
               re.I,
@@ -169,9 +108,10 @@ jobs:
           for name, url in sport_pattern.findall(text):
               checks.append((f"SPORT {name}", url.strip(), None))
 
+          # Other feeds that are more likely to rotate, redirect, expire, or depend on relays.
           watch_names = [
               "TVI", "CNN Portugal", "Porto Canal", "Canal 11 Internacional",
-              "FUEL TV", "PPTV HD 36", "T Sports 7",
+              "FIFA+ Portuguese", "FUEL TV", "PPTV HD 36", "T Sports 7",
           ]
           for channel in watch_names:
               pattern = re.compile(
@@ -182,6 +122,7 @@ jobs:
               if m:
                   checks.append((channel, m.group(1).strip(), None))
 
+          # Channel 7 needs the same referrer used by the playlist.
           ch7 = re.search(
               r'#EXTINF:[^\n]*,Channel 7 HD\s*\n#EXTVLCOPT:http-referrer=([^\n]+)\n(https?://[^\n]+)',
               text,
@@ -189,15 +130,6 @@ jobs:
           )
           if ch7:
               checks.append(("Channel 7 HD", ch7.group(2).strip(), {"Referer": ch7.group(1).strip()}))
-
-          for _, local_name in source_map.items():
-              pattern = re.compile(
-                  rf'#EXTINF:[^\n]*,{re.escape(local_name)}\s*\n(?:#EXTVLCOPT:[^\n]*\n)*(https?://[^\n]+)',
-                  re.I,
-              )
-              m = pattern.search(text)
-              if m:
-                  checks.append((local_name, m.group(1).strip(), None))
 
           with ThreadPoolExecutor(max_workers=10) as pool:
               futures = {
