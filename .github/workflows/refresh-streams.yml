@@ -37,6 +37,7 @@ jobs:
 
           PLAYLIST = Path("sstv.m3u")
           PPTV_API = "https://www-live.pptvhd36.com/api/live_player/program/1"
+          IPTV_ORG_PT = "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/pt.m3u"
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
           ctx = ssl.create_default_context()
 
@@ -98,6 +99,53 @@ jobs:
           except Exception as e:
               print(f"::warning::PPTV refresh failed: {e}")
 
+          # Keep selected Portuguese entertainment channels synced to iptv-org's current public playlist.
+          # This avoids freezing a relay URL when iptv-org replaces it later.
+          try:
+              _, _, pt_source = fetch_text(IPTV_ORG_PT, timeout=20, max_bytes=512_000)
+              for tvg_id, display_name in (
+                  ("AXN.pt", "AXN"),
+                  ("StarChannel.pt", "Star Channel"),
+              ):
+                  source = re.search(
+                      rf'#EXTINF:[^\n]*tvg-id="{re.escape(tvg_id)}(?:@[^"]+)?"[^\n]*\n'
+                      rf'((?:#EXTVLCOPT:[^\n]*\n)*)(https?://[^\n]+)',
+                      pt_source,
+                      re.I,
+                  )
+                  if not source:
+                      print(f"::warning::iptv-org source entry not found: {display_name}")
+                      continue
+
+                  option_lines = [line.strip() for line in source.group(1).splitlines() if line.strip()]
+                  stream_url = source.group(2).strip()
+                  block = (
+                      f'#EXTINF:-1 tvg-name="{display_name}" tvg-id="{tvg_id}" tvg-country="PT" group-title="Portugal",{display_name}\n'
+                      + (("\n".join(option_lines) + "\n") if option_lines else "")
+                      + stream_url
+                      + "\n"
+                  )
+
+                  existing = re.compile(
+                      rf'#EXTINF:[^\n]*tvg-id="{re.escape(tvg_id)}"[^\n]*\n'
+                      rf'(?:#EXTVLCOPT:[^\n]*\n)*(?:https?://[^\n]+)\n?',
+                      re.I,
+                  )
+                  current = existing.search(text)
+                  if current:
+                      if current.group(0).rstrip() != block.rstrip():
+                          text = text[:current.start()] + block + text[current.end():]
+                          changed.append(f"{display_name} synced from iptv-org")
+                  else:
+                      marker = "# === SPORTS | PORTUGAL ==="
+                      if marker in text:
+                          text = text.replace(marker, block + "\n" + marker, 1)
+                          changed.append(f"{display_name} added from iptv-org")
+                      else:
+                          print(f"::warning::Portugal insertion marker missing for {display_name}")
+          except Exception as e:
+              print(f"::warning::iptv-org Portugal sync failed: {e}")
+
           checks = []
 
           # SPORT TV: keep checking the user-supplied endpoints every two hours.
@@ -112,6 +160,7 @@ jobs:
           watch_names = [
               "TVI", "CNN Portugal", "Porto Canal", "Canal 11 Internacional",
               "FIFA+ Portuguese", "FUEL TV", "PPTV HD 36", "T Sports 7",
+              "AXN", "Star Channel",
           ]
           for channel in watch_names:
               pattern = re.compile(
