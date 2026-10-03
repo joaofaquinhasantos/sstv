@@ -181,7 +181,7 @@ https://live-us1.thaimomo.com/live-as/chgmmchannel-3/playlist.m3u8
 #EXTINF:-1 tvg-id="Channel8.th@SD" tvg-chno="27" group-title="Thailand",Channel 8
 https://live-us1.thaimomo.com/live-as/cheight-3/playlist.m3u8
 #EXTINF:-1 tvg-id="MONO29.th@SD" tvg-chno="29" group-title="Thailand",MONOMAX SPORTS TV 29
-https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/29/29.mpd
+https://live-us1.thaimomo.com/live-as/chmono29-2/playlist.m3u8
 #EXTINF:-1 tvg-id="MCOTHD.th@HD" tvg-chno="30" group-title="Thailand",9 MCOT HD
 https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="One31.th@SD" tvg-chno="31" group-title="Thailand",One31
