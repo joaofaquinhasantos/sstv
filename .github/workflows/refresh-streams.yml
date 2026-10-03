@@ -38,6 +38,7 @@ jobs:
           PLAYLIST = Path("sstv.m3u")
           PPTV_API = "https://www-live.pptvhd36.com/api/live_player/program/1"
           IPTV_ORG_PT = "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/pt.m3u"
+          IPTV_ORG_BR = "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/br.m3u"
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
           ctx = ssl.create_default_context()
 
@@ -64,6 +65,37 @@ jobs:
                   return True, "ok", final
               except Exception as e:
                   return False, f"{type(e).__name__}: {e}", url
+
+          def option_headers(option_text):
+              headers = {}
+              for line in option_text.splitlines():
+                  line = line.strip()
+                  if line.lower().startswith("#extvlcopt:http-referrer="):
+                      headers["Referer"] = line.split("=", 1)[1]
+                  elif line.lower().startswith("#extvlcopt:http-user-agent="):
+                      headers["User-Agent"] = line.split("=", 1)[1]
+              return headers or None
+
+          def source_candidates(source_text, tvg_id):
+              pattern = re.compile(
+                  rf'(#EXTINF:[^\n]*tvg-id="{re.escape(tvg_id)}(?:@[^"]+)?"[^\n]*\n)'
+                  rf'((?:#EXTVLCOPT:[^\n]*\n)*)(https?://[^\n]+)',
+                  re.I,
+              )
+              candidates = []
+              for match in pattern.finditer(source_text):
+                  extinf = match.group(1).strip()
+                  options = match.group(2).strip()
+                  url = match.group(3).strip()
+                  geo = "[geo-blocked]" in extinf.lower()
+                  https = url.lower().startswith("https://")
+                  preferred_host = any(host in url.lower() for host in (
+                      "cdntvms.com.br", "nxplay.com.br", "akamaihd.net", "google.com"
+                  ))
+                  tokenized = "?token=" in url.lower()
+                  score = (1 if geo else 0, 0 if https else 1, 0 if preferred_host else 1, 1 if tokenized else 0)
+                  candidates.append((score, options, url))
+              return sorted(candidates, key=lambda item: item[0])
 
           text = PLAYLIST.read_text(encoding="utf-8")
           changed = []
@@ -100,7 +132,6 @@ jobs:
               print(f"::warning::PPTV refresh failed: {e}")
 
           # Keep selected Portuguese entertainment channels synced to iptv-org's current public playlist.
-          # This avoids freezing a relay URL when iptv-org replaces it later.
           try:
               _, _, pt_source = fetch_text(IPTV_ORG_PT, timeout=20, max_bytes=512_000)
               for tvg_id, display_name in (
@@ -146,6 +177,67 @@ jobs:
           except Exception as e:
               print(f"::warning::iptv-org Portugal sync failed: {e}")
 
+          # Build and maintain a Brazil group from current iptv-org entries.
+          # Prefer HTTPS, non-geo-blocked and non-tokenized candidates that pass a live health check.
+          try:
+              _, _, br_source = fetch_text(IPTV_ORG_BR, timeout=20, max_bytes=2_000_000)
+              brazil_channels = (
+                  ("TVGloboSaoPaulo.br", "Globo"),
+                  ("Record.br", "Record"),
+                  ("SBTNacional.br", "SBT"),
+              )
+
+              brazil_marker = "# === BRAZIL ==="
+              thailand_marker = "# === THAILAND ==="
+              if brazil_marker not in text and thailand_marker in text:
+                  text = text.replace(thailand_marker, brazil_marker + "\n\n" + thailand_marker, 1)
+                  changed.append("Brazil group created")
+
+              for tvg_id, display_name in brazil_channels:
+                  candidates = source_candidates(br_source, tvg_id)
+                  if not candidates:
+                      print(f"::warning::iptv-org Brazil source entry not found: {display_name}")
+                      continue
+
+                  selected = None
+                  for _, options, url in candidates:
+                      headers = option_headers(options)
+                      ok, reason, final = healthy(url, headers)
+                      if ok:
+                          selected = (options, url)
+                          print(f"BRAZIL SOURCE OK: {display_name}: {url}" + (f" -> {final}" if final != url else ""))
+                          break
+                      print(f"BRAZIL SOURCE FAILED: {display_name}: {url} ({reason})")
+
+                  if not selected:
+                      print(f"::warning::No healthy Brazil candidate found for {display_name}; keeping existing entry if present")
+                      continue
+
+                  options, stream_url = selected
+                  option_lines = [line.strip() for line in options.splitlines() if line.strip()]
+                  block = (
+                      f'#EXTINF:-1 tvg-name="{display_name}" tvg-id="{tvg_id}" tvg-country="BR" group-title="Brazil",{display_name}\n'
+                      + (("\n".join(option_lines) + "\n") if option_lines else "")
+                      + stream_url
+                      + "\n"
+                  )
+
+                  existing = re.compile(
+                      rf'#EXTINF:[^\n]*tvg-id="{re.escape(tvg_id)}"[^\n]*\n'
+                      rf'(?:#EXTVLCOPT:[^\n]*\n)*(?:https?://[^\n]+)\n?',
+                      re.I,
+                  )
+                  current = existing.search(text)
+                  if current:
+                      if current.group(0).rstrip() != block.rstrip():
+                          text = text[:current.start()] + block + text[current.end():]
+                          changed.append(f"{display_name} Brazil stream refreshed")
+                  elif thailand_marker in text:
+                      text = text.replace(thailand_marker, block + "\n" + thailand_marker, 1)
+                      changed.append(f"{display_name} added to Brazil group")
+          except Exception as e:
+              print(f"::warning::iptv-org Brazil sync failed: {e}")
+
           checks = []
 
           # SPORT TV: keep checking the user-supplied endpoints every two hours.
@@ -160,7 +252,7 @@ jobs:
           watch_names = [
               "TVI", "CNN Portugal", "Porto Canal", "Canal 11 Internacional",
               "FIFA+ Portuguese", "FUEL TV", "PPTV HD 36", "T Sports 7",
-              "AXN", "Star Channel",
+              "AXN", "Star Channel", "Globo", "Record", "SBT",
           ]
           for channel in watch_names:
               pattern = re.compile(
