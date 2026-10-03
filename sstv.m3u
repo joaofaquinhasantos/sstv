@@ -216,7 +216,67 @@ https://stream1.stou.ac.th/live/stou_720p/playlist.m3u8
 #EXTINF:-1 tvg-id="TopNews.th@SD" tvg-country="TH" group-title="Thailand",Top News
 https://live.topnews.co.th/hls/topnews_a_720.m3u8
 
+# === KIDS — FRENCH ===
+# --- AUTO KIDS FRENCH START ---
+#EXTINF:-1 tvg-id="SSTVKids.fr-barbie" tvg-country="FR" group-title="KIDS | French",Barbie & Friends
+https://jmp2.uk/plu-686e7499e0ecf0e0cc25dbe3.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-beyblade" tvg-country="FR" group-title="KIDS | French",Beyblade
+https://jmp2.uk/plu-664c8ba33d173b00080ef0c8.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-bob-eponge" tvg-country="FR" group-title="KIDS | French",Bob l'éponge
+https://jmp2.uk/plu-5ffc8c345822750007e167de.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-charlotte-fraises" tvg-country="FR" group-title="KIDS | French",Charlotte aux Fraises
+https://jmp2.uk/plu-60dc6937b450ad0007377e48.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-detective-conan" tvg-country="FR" group-title="KIDS | French",Detective Conan
+https://jmp2.uk/plu-62f3e8ad2a8e8000077b013d.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-digimon" tvg-country="FR" group-title="KIDS | French",Digimon Adventure
+https://jmp2.uk/plu-617bae1d69bca3000729561e.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-doraemon" tvg-country="FR" group-title="KIDS | French",Doraemon
+https://jmp2.uk/plu-68b17414c23bb80b3c1d5bb5.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-icarly" tvg-country="FR" group-title="KIDS | French",iCarly
+https://jmp2.uk/plu-5f8ecc7aa44d9c00081fca29.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-inazuma" tvg-country="FR" group-title="KIDS | French",Inazuma Eleven
+https://jmp2.uk/plu-611e75226b7f420007c3f319.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-schtroumpfs" tvg-country="FR" group-title="KIDS | French",Les Schtroumpfs
+https://jmp2.uk/plu-68b16d2282862c1f067dc763.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-mattel-jr" tvg-country="FR" group-title="KIDS | French",Mattel Junior
+https://jmp2.uk/plu-686e74b0e48af72bc266e798.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-olive-tom" tvg-country="FR" group-title="KIDS | French",Olive & Tom
+https://jmp2.uk/plu-662a63275a402e00086bc8a5.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.fr-caillou" tvg-country="FR" group-title="KIDS | French",Caillou
+https://do7nccdsswstc.cloudfront.net/v1/manifest/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-1aso0bc668saa/a5233c83-f772-4a81-959a-45ec7877ef61/5.m3u8
+# --- AUTO KIDS FRENCH END ---
+
 # === KIDS — ENGLISH ===
+# --- AUTO KIDS ENGLISH START ---
+#EXTINF:-1 tvg-id="SSTVKids.en-all-babies" tvg-country="US" group-title="KIDS | English",All Babies Channel
+https://d390zi2w1jc4t4.cloudfront.net/master.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-baby-einstein" tvg-country="US" group-title="KIDS | English",Baby Einstein
+https://ds25p79iq4576.cloudfront.net/master.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-barbie" tvg-country="US" group-title="KIDS | English",Barbie and Friends
+https://d1xqdnwy1bo05f.cloudfront.net/barb.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-blippi" tvg-country="US" group-title="KIDS | English",Blippi
+https://d2p70ev1g5q1aj.cloudfront.net/Blippi_SONO46.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-dennis-gnasher" tvg-country="US" group-title="KIDS | English",Dennis and Gnasher
+https://d1upcw8nab85tc.cloudfront.net/dngn.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-looloo" tvg-country="US" group-title="KIDS | English",LooLoo Kids
+https://amg02757-amg02757c5-samsung-gb-5765.playouts.now.amagi.tv/playlist/amg02757-loolookids-llkenfast-samsunggb/playlist.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-teletubbies" tvg-country="US" group-title="KIDS | English",Teletubbies
+https://dv8lsrd8fecw9.cloudfront.net/master.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-pocoyo" tvg-country="US" group-title="KIDS | English",Pocoyo
+https://d16ecq77cfclte.cloudfront.net/Pocoyo_GB.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-strawberry" tvg-country="US" group-title="KIDS | English",Strawberry Shortcake
+https://d10c3fwb9yju0h.cloudfront.net/master.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-lego" tvg-country="US" group-title="KIDS | English",The LEGO Channel
+https://dltiqboxjw21d.cloudfront.net/index.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-smurf" tvg-country="US" group-title="KIDS | English",Smurf TV
+https://d144py1prrd7ns.cloudfront.net/smrfe.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-rabbids" tvg-country="US" group-title="KIDS | English",Rabbids Invasion
+https://dikkyk1ckkhzq.cloudfront.net/RabiddsInvasion_GB.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-sonic" tvg-country="US" group-title="KIDS | English",Sonic The Hedgehog
+https://d2f1o3sb3u36tf.cloudfront.net/master.m3u8
+#EXTINF:-1 tvg-id="SSTVKids.en-pokemon" tvg-country="US" group-title="KIDS | English",Pokémon
+https://docpe51mdltl5.cloudfront.net/Pokemon_GB.m3u8
+# --- AUTO KIDS ENGLISH END ---
 #EXTINF:-1 tvg-id="PBSKids.us" group-title="KIDS | English",PBS Kids
 https://livestream.pbskids.org/out/v1/14507d931bbe48a69287e4850e53443c/est.m3u8
 #EXTINF:-1 tvg-id="KidoodleTV.ca" group-title="KIDS | English",Kidoodle.TV
