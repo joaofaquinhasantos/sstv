@@ -1,0 +1,237 @@
+name: Maintain Thailand IPTV channels
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/refresh-thailand.yml"
+  schedule:
+    - cron: "17 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sstv-thailand-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-thailand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refresh and expand working Thailand channels
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          import ssl
+          import urllib.request
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from pathlib import Path
+
+          PLAYLIST = Path("sstv.m3u")
+          SOURCE = "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/th.m3u"
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
+          ctx = ssl.create_default_context()
+
+          CHANNELS = {
+              "3HD.th": ("3HD", 33, False),
+              "13SiamThai.th": ("13 Siam Thai", None, True),
+              "ALTV.th": ("ALTV", None, True),
+              "AmarinTV.th": ("Amarin TV 34", 34, False),
+              "Channel7.th": ("Channel 7 HD", 35, False),
+              "Channel8.th": ("Channel 8", 27, False),
+              "CoolChannel.th": ("Cool Channel", None, True),
+              "GMM25.th": ("GMM25", 25, False),
+              "MONO29.th": ("MONO29", 29, False),
+              "NationTV.th": ("Nation TV", 22, False),
+              "NBTWorld.th": ("NBT World", None, True),
+              "One31.th": ("One31", 31, False),
+              "PoliceTV.th": ("Police TV", None, True),
+              "STOUChannel.th": ("STOU Channel", None, True),
+              "ThairathTV.th": ("Thairath TV", 32, False),
+              "TNN16.th": ("TNN16", 16, False),
+              "TopNews.th": ("Top News", None, True),
+              "True4U.th": ("True4U", 24, False),
+              "WorkpointTV.th": ("Workpoint TV", 23, False),
+          }
+
+          PREFERRED_HOSTS = (
+              "cdn.byteark.com", "akamaihd.net", "mcot.net", "iiptvcdn.com",
+              "topnews.co.th", "stou.ac.th", "livestreaming.in.th", "x2.co.th",
+              "cool-channel.com", "v2h-cdn.com",
+          )
+
+          def fetch_text(url, timeout=15, max_bytes=512_000, headers=None):
+              request_headers = {
+                  "User-Agent": UA,
+                  "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
+              }
+              if headers:
+                  request_headers.update(headers)
+              req = urllib.request.Request(url, headers=request_headers)
+              with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                  return r.geturl(), r.status, r.read(max_bytes).decode("utf-8", "ignore")
+
+          def options_to_headers(options):
+              headers = {}
+              for line in options.splitlines():
+                  low = line.lower().strip()
+                  if low.startswith("#extvlcopt:http-referrer="):
+                      headers["Referer"] = line.split("=", 1)[1].strip()
+                  elif low.startswith("#extvlcopt:http-user-agent="):
+                      headers["User-Agent"] = line.split("=", 1)[1].strip()
+              return headers or None
+
+          def healthy(entry):
+              try:
+                  final, status, body = fetch_text(
+                      entry["url"], timeout=8, max_bytes=96_000,
+                      headers=options_to_headers(entry["options"]),
+                  )
+                  if not (200 <= status < 400):
+                      return False, final, f"HTTP {status}"
+                  low = body.lower()
+                  if "<html" in low and "#extm3u" not in low:
+                      return False, final, "HTML response"
+                  return True, final, "ok"
+              except Exception as exc:
+                  return False, entry["url"], f"{type(exc).__name__}: {exc}"
+
+          _, _, source = fetch_text(SOURCE, timeout=25, max_bytes=2_000_000)
+          entry_re = re.compile(
+              r'(?P<extinf>#EXTINF:[^\n]*\n)'
+              r'(?P<options>(?:#EXTVLCOPT:[^\n]*\n)*)'
+              r'(?P<url>https?://[^\n]+)', re.I,
+          )
+
+          candidates = {key: [] for key in CHANNELS}
+          for match in entry_re.finditer(source):
+              extinf = match.group("extinf").strip()
+              id_match = re.search(r'tvg-id="([^"]+)"', extinf, re.I)
+              if not id_match:
+                  continue
+              base_id = id_match.group(1).split("@", 1)[0]
+              if base_id not in CHANNELS:
+                  continue
+              low = extinf.lower()
+              if "[geo-blocked]" in low:
+                  continue
+
+              url = match.group("url").strip()
+              options = match.group("options").strip()
+              not_247 = "[not 24/7]" in low
+              https = url.lower().startswith("https://")
+              preferred = any(host in url.lower() for host in PREFERRED_HOSTS)
+              relay = "thaimomo.com" in url.lower()
+              tokenized = "?token=" in url.lower()
+              score = (
+                  1 if not_247 else 0,
+                  0 if https else 1,
+                  0 if preferred else 1,
+                  1 if relay else 0,
+                  1 if tokenized else 0,
+              )
+              candidates[base_id].append({
+                  "url": url, "options": options, "score": score, "extinf": extinf,
+              })
+
+          tests = {}
+          with ThreadPoolExecutor(max_workers=18) as pool:
+              for tvg_id, entries in candidates.items():
+                  for entry in entries:
+                      tests[pool.submit(healthy, entry)] = (tvg_id, entry)
+
+              working = {key: [] for key in CHANNELS}
+              for fut in as_completed(tests):
+                  tvg_id, entry = tests[fut]
+                  ok, final, reason = fut.result()
+                  if ok:
+                      working[tvg_id].append(entry)
+                      print(f"THAI OK: {tvg_id}: {entry['url']}" + (f" -> {final}" if final != entry['url'] else ""))
+                  else:
+                      print(f"THAI FAILED: {tvg_id}: {entry['url']} ({reason})")
+
+          text = PLAYLIST.read_text(encoding="utf-8")
+          changed = []
+          added = []
+          updated = []
+          unavailable = []
+
+          def replace_or_add(tvg_id, display_name, chno, allow_add, selected):
+              nonlocal_text = None
+              options = selected["options"]
+              url = selected["url"]
+              option_block = (("\n".join(line.strip() for line in options.splitlines() if line.strip()) + "\n") if options else "")
+
+              existing = re.compile(
+                  rf'(?P<extinf>#EXTINF:[^\n]*tvg-id="{re.escape(tvg_id)}(?:@[^"]+)?"[^\n]*\n)'
+                  rf'(?P<options>(?:#EXTVLCOPT:[^\n]*\n)*)'
+                  rf'(?P<url>https?://[^\n]+)\n?', re.I,
+              )
+              m = existing.search(text)
+              if m:
+                  current_url = m.group("url").strip()
+                  current_options = m.group("options").strip()
+                  if current_url != url or current_options != options.strip():
+                      block = m.group("extinf") + option_block + url + "\n"
+                      return (text[:m.start()] + block + text[m.end():], "updated")
+                  return (text, "same")
+
+              if not allow_add:
+                  return (text, "missing-preserved")
+
+              chno_part = f' tvg-chno="{chno}"' if chno is not None else ""
+              block = (
+                  f'#EXTINF:-1 tvg-id="{tvg_id}@SD"{chno_part} tvg-country="TH" group-title="Thailand",{display_name}\n'
+                  + option_block + url + "\n\n"
+              )
+              marker = "# === KIDS — ENGLISH ==="
+              if marker not in text:
+                  raise RuntimeError("Kids marker missing; cannot safely add Thailand channel")
+              return (text.replace(marker, block + marker, 1), "added")
+
+          for tvg_id, (display_name, chno, allow_add) in CHANNELS.items():
+              choices = working.get(tvg_id, [])
+              if not choices:
+                  unavailable.append(display_name)
+                  print(f"::warning::No healthy candidate for {display_name}; keeping existing entry if any")
+                  continue
+              selected = sorted(choices, key=lambda item: item["score"])[0]
+              new_text, status = replace_or_add(tvg_id, display_name, chno, allow_add, selected)
+              if new_text != text:
+                  text = new_text
+                  changed.append(display_name)
+                  if status == "added":
+                      added.append(display_name)
+                  elif status == "updated":
+                      updated.append(display_name)
+              print(f"THAI SELECTED: {display_name}: {selected['url']} ({status})")
+
+          if changed:
+              PLAYLIST.write_text(text, encoding="utf-8")
+
+          print("THAILAND SUMMARY:")
+          print("  Added:", ", ".join(added) if added else "none")
+          print("  Updated:", ", ".join(updated) if updated else "none")
+          print("  No healthy candidate:", ", ".join(unavailable) if unavailable else "none")
+          PY
+
+      - name: Commit Thailand playlist refresh
+        shell: bash
+        run: |
+          if git diff --quiet -- sstv.m3u; then
+            echo "No Thailand playlist changes"
+            exit 0
+          fi
+          git config user.name "sstv-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sstv.m3u
+          git commit -m "Refresh working Thailand channels"
+          git pull --rebase origin main
+          git push
