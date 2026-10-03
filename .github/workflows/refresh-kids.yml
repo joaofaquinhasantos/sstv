@@ -1,0 +1,267 @@
+name: Maintain Kids IPTV channels
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/refresh-kids.yml"
+  schedule:
+    - cron: "47 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sstv-kids-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-kids:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refresh public kids cartoon channels
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          import ssl
+          import urllib.request
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from pathlib import Path
+
+          PLAYLIST = Path("sstv.m3u")
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
+          ctx = ssl.create_default_context()
+
+          SOURCES = {
+              "fr_pluto": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/fr_pluto.m3u",
+              "fr": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/fr.m3u",
+              "th": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/th.m3u",
+              "us_samsung": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_samsung.m3u",
+              "uk_samsung": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/uk_samsung.m3u",
+          }
+
+          # Curated public/FAST kids channels only. Premium linear channels such as
+          # Cartoon Network, Disney Channel and Nickelodeon are intentionally excluded
+          # unless an authorized reusable public feed becomes available.
+          WANTED = [
+              # French first
+              ("French", "fr-barbie", "Barbie & Friends", ("fr_pluto",), (r"^Barbie & Friends$",)),
+              ("French", "fr-beyblade", "Beyblade", ("fr_pluto",), (r"^Beyblade$",)),
+              ("French", "fr-bob-eponge", "Bob l'éponge", ("fr_pluto",), (r"^Bob l['’]éponge",)),
+              ("French", "fr-charlotte-fraises", "Charlotte aux Fraises", ("fr_pluto",), (r"^Charlotte aux Fraises$",)),
+              ("French", "fr-detective-conan", "Detective Conan", ("fr_pluto",), (r"^Detective Conan France",)),
+              ("French", "fr-digimon", "Digimon Adventure", ("fr_pluto",), (r"^Digimon Adventure$",)),
+              ("French", "fr-doraemon", "Doraemon", ("fr_pluto",), (r"^Doraemon$",)),
+              ("French", "fr-icarly", "iCarly", ("fr_pluto",), (r"^iCarly TV$",)),
+              ("French", "fr-inazuma", "Inazuma Eleven", ("fr_pluto",), (r"^Inazuma Eleven$",)),
+              ("French", "fr-schtroumpfs", "Les Schtroumpfs", ("fr_pluto",), (r"^Les Schtroumpfs$",)),
+              ("French", "fr-mattel-jr", "Mattel Junior", ("fr_pluto",), (r"^Mattel Junior$",)),
+              ("French", "fr-olive-tom", "Olive & Tom", ("fr_pluto",), (r"^Olive & Tom$",)),
+              ("French", "fr-caillou", "Caillou", ("fr",), (r"^Caillou(?: \(.*\))?$",)),
+
+              # Thai public-service children's/educational channel. It may be restricted
+              # to Thailand; only add it when the current runner can actually retrieve HLS.
+              ("Thai", "th-altv", "ALTV", ("th",), (r"^ALTV(?: |$)",)),
+
+              # English public/FAST cartoon and children's channels
+              ("English", "en-all-babies", "All Babies Channel", ("us_samsung",), (r"^All Babies Channel",)),
+              ("English", "en-baby-einstein", "Baby Einstein", ("us_samsung",), (r"^Baby Einstein",)),
+              ("English", "en-barbie", "Barbie and Friends", ("us_samsung",), (r"^Barbie and Friends",)),
+              ("English", "en-barney", "Barney and Friends", ("us_samsung",), (r"^Barney and Friends",)),
+              ("English", "en-bbc-kids", "BBC Kids", ("us_samsung",), (r"^BBC Kids",)),
+              ("English", "en-blippi", "Blippi", ("us_samsung",), (r"^Blippi",)),
+              ("English", "en-dennis-gnasher", "Dennis and Gnasher", ("uk_samsung",), (r"^Dennis and Gnasher",)),
+              ("English", "en-looloo", "LooLoo Kids", ("uk_samsung", "us_samsung"), (r"^LooLoo Kids",)),
+              ("English", "en-teletubbies", "Teletubbies", ("uk_samsung", "us_samsung"), (r"^Teletubbies",)),
+              ("English", "en-pocoyo", "Pocoyo", ("uk_samsung", "us_samsung"), (r"^Pocoyo",)),
+              ("English", "en-supertoons", "SuperToons TV", ("uk_samsung", "us_samsung"), (r"^SuperToons TV",)),
+              ("English", "en-strawberry", "Strawberry Shortcake", ("uk_samsung", "us_samsung"), (r"^Strawberry Shortcake",)),
+              ("English", "en-lego", "The LEGO Channel", ("uk_samsung", "us_samsung"), (r"^(?:The )?LEGO Channel",)),
+              ("English", "en-transformers", "Transformers", ("uk_samsung", "us_samsung"), (r"^Transformers",)),
+              ("English", "en-smurf", "Smurf TV", ("uk_samsung", "us_samsung"), (r"^Smurf TV",)),
+              ("English", "en-rabbids", "Rabbids Invasion", ("uk_samsung", "us_samsung"), (r"^Rabbids Invasion",)),
+              ("English", "en-masha", "Masha & the Bear", ("uk_samsung", "us_samsung"), (r"^Masha (?:&|and) the Bear",)),
+              ("English", "en-sonic", "Sonic The Hedgehog", ("uk_samsung", "us_samsung"), (r"^Sonic (?:The )?Hedgehog",)),
+              ("English", "en-pokemon", "Pokémon", ("uk_samsung",), (r"^Pok[eé]mon",)),
+          ]
+
+          def fetch_text(url, timeout=20, max_bytes=2_000_000, headers=None):
+              h = {
+                  "User-Agent": UA,
+                  "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
+              }
+              if headers:
+                  h.update(headers)
+              req = urllib.request.Request(url, headers=h)
+              with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                  return r.geturl(), r.status, r.read(max_bytes).decode("utf-8", "ignore")
+
+          def option_headers(options):
+              h = {}
+              for line in options.splitlines():
+                  low = line.lower().strip()
+                  if low.startswith("#extvlcopt:http-referrer="):
+                      h["Referer"] = line.split("=", 1)[1].strip()
+                  elif low.startswith("#extvlcopt:http-user-agent="):
+                      h["User-Agent"] = line.split("=", 1)[1].strip()
+              return h or None
+
+          def healthy(entry):
+              try:
+                  final, status, body = fetch_text(
+                      entry["url"], timeout=9, max_bytes=96_000,
+                      headers=option_headers(entry["options"]),
+                  )
+                  if not (200 <= status < 400):
+                      return False, final, f"HTTP {status}"
+                  low = body.lower()
+                  if "<html" in low and "#extm3u" not in low:
+                      return False, final, "HTML response"
+                  if ".m3u8" in entry["url"].lower() and "#extm3u" not in low:
+                      return False, final, "not HLS playlist"
+                  return True, final, "ok"
+              except Exception as exc:
+                  return False, entry["url"], f"{type(exc).__name__}: {exc}"
+
+          entry_re = re.compile(
+              r'(?P<extinf>#EXTINF:[^\n]*\n)'
+              r'(?P<options>(?:#EXTVLCOPT:[^\n]*\n)*)'
+              r'(?P<url>https?://[^\n]+)', re.I,
+          )
+
+          parsed = {}
+          for source_name, source_url in SOURCES.items():
+              try:
+                  _, _, body = fetch_text(source_url)
+              except Exception as exc:
+                  print(f"::warning::KIDS source fetch failed {source_name}: {exc}")
+                  parsed[source_name] = []
+                  continue
+              rows = []
+              for m in entry_re.finditer(body):
+                  extinf = m.group("extinf").strip()
+                  if "[geo-blocked]" in extinf.lower():
+                      continue
+                  url = m.group("url").strip()
+                  if ".m3u8" not in url.lower():
+                      continue
+                  raw_name = extinf.rsplit(",", 1)[-1].strip()
+                  clean_name = re.sub(r"\s*\([^)]*p\)\s*", " ", raw_name, flags=re.I)
+                  clean_name = re.sub(r"\s*\[[^]]+\]\s*$", "", clean_name).strip()
+                  rows.append({
+                      "name": clean_name,
+                      "raw_name": raw_name,
+                      "url": url,
+                      "options": m.group("options").strip(),
+                      "extinf": extinf,
+                      "source": source_name,
+                  })
+              parsed[source_name] = rows
+
+          candidates = []
+          for language, key, display_name, source_order, patterns in WANTED:
+              for rank, source_name in enumerate(source_order):
+                  for entry in parsed.get(source_name, []):
+                      if any(re.search(p, entry["name"], re.I) for p in patterns):
+                          item = dict(entry)
+                          item.update({
+                              "language": language,
+                              "key": key,
+                              "display": display_name,
+                              "source_rank": rank,
+                          })
+                          candidates.append(item)
+
+          tests = {}
+          with ThreadPoolExecutor(max_workers=20) as pool:
+              for item in candidates:
+                  tests[pool.submit(healthy, item)] = item
+
+              working = {}
+              for fut in as_completed(tests):
+                  item = tests[fut]
+                  ok, final, reason = fut.result()
+                  tag = f"{item['language']} | {item['display']}"
+                  if ok:
+                      current = working.get(item["key"])
+                      if current is None or item["source_rank"] < current["source_rank"]:
+                          working[item["key"]] = item
+                      print(f"KIDS OK: {tag}: {item['url']}" + (f" -> {final}" if final != item["url"] else ""))
+                  else:
+                      print(f"KIDS FAILED: {tag}: {item['url']} ({reason})")
+
+          by_language = {"French": [], "Thai": [], "English": []}
+          wanted_by_key = {key: (language, display) for language, key, display, _, _ in WANTED}
+          for key, (language, display) in wanted_by_key.items():
+              item = working.get(key)
+              if not item:
+                  print(f"::warning::No healthy public Kids candidate: {language} | {display}")
+                  continue
+              option_block = ""
+              if item["options"]:
+                  option_block = "\n".join(x.strip() for x in item["options"].splitlines() if x.strip()) + "\n"
+              block = (
+                  f'#EXTINF:-1 tvg-id="SSTVKids.{key}" tvg-country="{ "FR" if language == "French" else "TH" if language == "Thai" else "US" }" '
+                  f'group-title="KIDS | {language}",{display}\n'
+                  + option_block + item["url"]
+              )
+              by_language[language].append(block)
+
+          text = PLAYLIST.read_text(encoding="utf-8")
+
+          def replace_managed(text, language, blocks):
+              start = f"# --- AUTO KIDS {language.upper()} START ---"
+              end = f"# --- AUTO KIDS {language.upper()} END ---"
+              managed = start + "\n" + ("\n".join(blocks) + "\n" if blocks else "") + end
+              pattern = re.compile(re.escape(start) + r"\n.*?" + re.escape(end), re.S)
+              if pattern.search(text):
+                  return pattern.sub(managed, text, count=1)
+
+              if language == "English":
+                  marker = "# === KIDS — ENGLISH ==="
+                  if marker not in text:
+                      raise RuntimeError("English Kids marker missing")
+                  return text.replace(marker, marker + "\n" + managed, 1)
+
+              english_marker = "# === KIDS — ENGLISH ==="
+              if english_marker not in text:
+                  raise RuntimeError("English Kids marker missing")
+              section = f"# === KIDS — {language.upper()} ===\n{managed}\n\n"
+              return text.replace(english_marker, section + english_marker, 1)
+
+          new_text = text
+          for language in ("French", "Thai", "English"):
+              # Do not create an empty new language section, but if a managed block already
+              # exists update it to empty so stale dead feeds are removed.
+              start = f"# --- AUTO KIDS {language.upper()} START ---"
+              if by_language[language] or start in new_text:
+                  new_text = replace_managed(new_text, language, by_language[language])
+
+          if new_text != text:
+              PLAYLIST.write_text(new_text, encoding="utf-8")
+
+          print("KIDS SUMMARY:")
+          for language in ("French", "Thai", "English"):
+              names = [b.split(",", 1)[-1].split("\n", 1)[0] for b in by_language[language]]
+              print(f"  {language}: {len(names)}" + (" -> " + ", ".join(names) if names else ""))
+          PY
+
+      - name: Commit Kids playlist refresh
+        shell: bash
+        run: |
+          if git diff --quiet -- sstv.m3u; then
+            echo "No Kids playlist changes"
+            exit 0
+          fi
+          git config user.name "sstv-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sstv.m3u
+          git commit -m "Refresh working Kids cartoon channels"
+          git pull --rebase origin main
+          git push
