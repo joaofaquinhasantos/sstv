@@ -1,0 +1,244 @@
+name: Maintain Brazil IPTV channels
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/refresh-brazil.yml"
+  schedule:
+    - cron: "47 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sstv-stream-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-brazil:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild working Brazil channels
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          import ssl
+          import urllib.request
+          from collections import defaultdict
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from pathlib import Path
+
+          PLAYLIST = Path("sstv.m3u")
+          SOURCE = "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/br.m3u"
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
+          ctx = ssl.create_default_context()
+
+          def fetch_text(url, timeout=15, max_bytes=2_000_000, headers=None):
+              request_headers = {
+                  "User-Agent": UA,
+                  "Accept": "application/vnd.apple.mpegurl, application/x-mpegURL, */*",
+              }
+              if headers:
+                  request_headers.update(headers)
+              req = urllib.request.Request(url, headers=request_headers)
+              with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                  return r.geturl(), r.status, r.read(max_bytes).decode("utf-8", "ignore")
+
+          def option_headers(option_text):
+              headers = {}
+              for line in option_text.splitlines():
+                  line = line.strip()
+                  low = line.lower()
+                  if low.startswith("#extvlcopt:http-referrer="):
+                      headers["Referer"] = line.split("=", 1)[1]
+                  elif low.startswith("#extvlcopt:http-user-agent="):
+                      headers["User-Agent"] = line.split("=", 1)[1]
+              return headers or None
+
+          def healthy(url, option_text):
+              try:
+                  final, status, body = fetch_text(
+                      url,
+                      timeout=8,
+                      max_bytes=96_000,
+                      headers=option_headers(option_text),
+                  )
+                  if not (200 <= status < 400):
+                      return False, final, f"HTTP {status}"
+                  low = body.lower()
+                  if "<html" in low and "#extm3u" not in low:
+                      return False, final, "HTML response"
+                  return True, final, "ok"
+              except Exception as exc:
+                  return False, url, f"{type(exc).__name__}: {exc}"
+
+          def clean_name(name):
+              name = re.sub(r"\s*\[[^\]]+\]\s*$", "", name).strip()
+              name = re.sub(r"\s*\(\d{3,4}p\)\s*$", "", name).strip()
+              return name
+
+          def family_for(tvg_id, name):
+              base = tvg_id.split("@", 1)[0]
+              lid = base.lower()
+              lname = name.lower().strip()
+
+              # Globo broadcast network only: keep Rede Globo / TV Globo feeds,
+              # but not GloboNews, Globoplay, Gloob or unrelated Globo brands.
+              if lid == "redeglobo.br" or lid.startswith("tvglobo"):
+                  return "Globo"
+              if lname.startswith("rede globo") or lname.startswith("tv globo"):
+                  return "Globo"
+
+              # Record network, regional Record TV stations and Record News.
+              if lid.startswith("record") or lname.startswith("record"):
+                  return "Record"
+
+              # SBT national, regional affiliates, SBT News and SBT Kids.
+              if lid.startswith("sbt") or lname.startswith("sbt"):
+                  return "SBT"
+
+              return None
+
+          _, _, source = fetch_text(SOURCE, timeout=25)
+
+          entry_re = re.compile(
+              r'(?P<extinf>#EXTINF:[^\n]*\n)'
+              r'(?P<options>(?:#EXTVLCOPT:[^\n]*\n)*)'
+              r'(?P<url>https?://[^\n]+)',
+              re.I,
+          )
+
+          candidates = defaultdict(list)
+          for match in entry_re.finditer(source):
+              extinf = match.group("extinf").strip()
+              if "[geo-blocked]" in extinf.lower():
+                  continue
+
+              id_match = re.search(r'tvg-id="([^"]+)"', extinf, re.I)
+              if not id_match:
+                  continue
+              tvg_id = id_match.group(1).split("@", 1)[0]
+
+              raw_name = extinf.rsplit(",", 1)[-1].strip()
+              display_name = clean_name(raw_name)
+              family = family_for(tvg_id, display_name)
+              if not family:
+                  continue
+
+              options = match.group("options").strip()
+              url = match.group("url").strip()
+              is_https = url.lower().startswith("https://")
+              preferred = any(host in url.lower() for host in (
+                  "cdntvms.com.br",
+                  "nxplay.com.br",
+                  "akamaihd.net",
+                  "google.com",
+                  "jmvstream.com",
+                  "streamlock.net",
+              ))
+              tokenized = "?token=" in url.lower()
+              score = (0 if is_https else 1, 0 if preferred else 1, 1 if tokenized else 0)
+              candidates[tvg_id].append({
+                  "family": family,
+                  "name": display_name,
+                  "options": options,
+                  "url": url,
+                  "score": score,
+              })
+
+          tests = {}
+          with ThreadPoolExecutor(max_workers=18) as pool:
+              for tvg_id, entries in candidates.items():
+                  for entry in entries:
+                      fut = pool.submit(healthy, entry["url"], entry["options"])
+                      tests[fut] = (tvg_id, entry)
+
+              healthy_by_id = defaultdict(list)
+              for fut in as_completed(tests):
+                  tvg_id, entry = tests[fut]
+                  ok, final, reason = fut.result()
+                  if ok:
+                      healthy_by_id[tvg_id].append(entry)
+                      print(f'BRAZIL OK: {entry["family"]} | {entry["name"]}: {entry["url"]}' + (f" -> {final}" if final != entry["url"] else ""))
+                  else:
+                      print(f'BRAZIL FAILED: {entry["family"]} | {entry["name"]}: {entry["url"]} ({reason})')
+
+          selected = []
+          for tvg_id, entries in healthy_by_id.items():
+              best = sorted(entries, key=lambda item: item["score"])[0]
+              selected.append((best["family"], best["name"], tvg_id, best["options"], best["url"]))
+
+          family_order = {"Globo": 0, "Record": 1, "SBT": 2}
+          selected.sort(key=lambda item: (family_order[item[0]], item[1].lower(), item[2].lower()))
+
+          # Avoid duplicate channel blocks that resolve to exactly the same URL.
+          unique = []
+          seen_urls = set()
+          for item in selected:
+              url_key = item[4].strip().lower()
+              if url_key in seen_urls:
+                  continue
+              seen_urls.add(url_key)
+              unique.append(item)
+
+          blocks = []
+          counts = defaultdict(int)
+          for family, name, tvg_id, options, url in unique:
+              counts[family] += 1
+              option_lines = [line.strip() for line in options.splitlines() if line.strip()]
+              block = (
+                  f'#EXTINF:-1 tvg-name="{name}" tvg-id="{tvg_id}" tvg-country="BR" group-title="Brazil",{name}\n'
+                  + (("\n".join(option_lines) + "\n") if option_lines else "")
+                  + url
+              )
+              blocks.append(block)
+
+          if not blocks:
+              raise RuntimeError("No healthy Globo/Record/SBT Brazil channels found; refusing to erase existing Brazil group")
+
+          text = PLAYLIST.read_text(encoding="utf-8")
+          text = text.replace(
+              "#PLAYLIST:SSTV - France Portugal Thailand Kids",
+              "#PLAYLIST:SSTV - France Portugal Brazil Thailand Kids",
+          )
+
+          brazil_block = "# === BRAZIL ===\n" + "\n\n".join(blocks) + "\n\n"
+          section = re.compile(r'# === BRAZIL ===\n.*?(?=# === THAILAND ===)', re.S)
+
+          if section.search(text):
+              new_text = section.sub(brazil_block, text, count=1)
+          elif "# === THAILAND ===" in text:
+              new_text = text.replace("# === THAILAND ===", brazil_block + "# === THAILAND ===", 1)
+          else:
+              raise RuntimeError("Thailand marker missing; cannot safely place Brazil group")
+
+          if new_text != text:
+              PLAYLIST.write_text(new_text, encoding="utf-8")
+
+          print("BRAZIL SUMMARY:")
+          print(f"  Globo: {counts['Globo']}")
+          print(f"  Record: {counts['Record']}")
+          print(f"  SBT: {counts['SBT']}")
+          print(f"  Total: {len(blocks)}")
+          PY
+
+      - name: Commit Brazil playlist refresh
+        shell: bash
+        run: |
+          if git diff --quiet -- sstv.m3u; then
+            echo "No Brazil playlist changes"
+            exit 0
+          fi
+          git config user.name "sstv-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sstv.m3u
+          git commit -m "Refresh working Brazil channels"
+          git pull --rebase origin main
+          git push
