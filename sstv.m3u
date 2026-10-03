@@ -143,6 +143,9 @@ https://media.cdntvms.com.br/record_nacional_sat/index.m3u8
 #EXTINF:-1 tvg-name="SBT" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT
 https://media.cdntvms.com.br/sbt_sat/index.m3u8
 
+#EXTINF:-1 tvg-name="Globo" tvg-id="RedeGlobo.br" tvg-country="BR" group-title="Brazil",Globo
+https://media2.cdntvms.com.br/tv_morena_dorados/index.m3u8
+
 # === THAILAND ===
 #EXTINF:-1 tvg-id="NBT2HD.th@SD" tvg-chno="2" group-title="Thailand",NBT 2HD
 https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8
