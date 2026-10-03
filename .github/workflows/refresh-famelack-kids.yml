@@ -1,0 +1,46 @@
+name: Maintain Famelack branded Kids channels
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/refresh-famelack-kids.yml"
+      - ".github/scripts/refresh_famelack_kids.py"
+  schedule:
+    - cron: "7 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sstv-famelack-kids-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-famelack-kids:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install YouTube resolver
+        run: python -m pip install --disable-pip-version-check -q yt-dlp
+
+      - name: Refresh Famelack branded Kids channels
+        run: python .github/scripts/refresh_famelack_kids.py
+
+      - name: Commit branded Kids refresh
+        shell: bash
+        run: |
+          if git diff --quiet -- sstv.m3u; then
+            echo "No Famelack Kids playlist changes"
+            exit 0
+          fi
+          git config user.name "sstv-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sstv.m3u
+          git commit -m "Refresh Famelack branded Kids channels"
+          git pull --rebase origin main
+          git push
