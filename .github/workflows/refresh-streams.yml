@@ -182,7 +182,7 @@ jobs:
           try:
               _, _, br_source = fetch_text(IPTV_ORG_BR, timeout=20, max_bytes=2_000_000)
               brazil_channels = (
-                  ("TVGloboSaoPaulo.br", "Globo"),
+                  ("RedeGlobo.br", "Globo"),
                   ("Record.br", "Record"),
                   ("SBTNacional.br", "SBT"),
               )
