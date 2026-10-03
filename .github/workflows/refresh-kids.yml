@@ -237,8 +237,6 @@ jobs:
 
           new_text = text
           for language in ("French", "Thai", "English"):
-              # Do not create an empty new language section, but if a managed block already
-              # exists update it to empty so stale dead feeds are removed.
               start = f"# --- AUTO KIDS {language.upper()} START ---"
               if by_language[language] or start in new_text:
                   new_text = replace_managed(new_text, language, by_language[language])
