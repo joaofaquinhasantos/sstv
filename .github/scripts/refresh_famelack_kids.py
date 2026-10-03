@@ -96,6 +96,7 @@ def resolve_youtube_hls(embed_url):
         "--no-warnings",
         "--no-playlist",
         "--socket-timeout", "20",
+        "--extractor-args", "youtube:player_client=web_embedded",
         "-f", "best[protocol^=m3u8]/best",
         "-g",
         watch_url,
@@ -144,6 +145,7 @@ def choose_source(record, old_url=None):
         print(f"FAMELACK KIDS DIRECT FAILED: {record['name']}: {url} ({reason})")
 
     # Famelack also lists many official/public YouTube live channels. Resolve those
+    # with YouTube's embedded player client (these records are embeddable on Famelack)
     # to temporary HLS manifests so normal IPTV players can consume them.
     for url in sources.get("youtube") or []:
         resolved, reason = resolve_youtube_hls(url)
