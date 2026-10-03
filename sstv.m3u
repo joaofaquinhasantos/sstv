@@ -256,6 +256,12 @@ https://do7nccdsswstc.cloudfront.net/v1/manifest/3722c60a815c199d9c0ef36c5b73da6
 https://stmv2.srvif.com/gafeab/gafeab/playlist.m3u8
 # --- FAMELACK KIDS PORTUGUESE END ---
 
+# === KIDS — SPANISH ===
+# --- FAMELACK KIDS SPANISH START ---
+#EXTINF:-1 tvg-id="SSTVFamelackKids.es-disneyjr-latam-south" tvg-country="AR" group-title="KIDS | Spanish",Disney Jr. Latin America South
+https://tr.live.clarovtrcdn.vtrplay.com/disneyjrhdchi/vxfmt=dp/playlist.m3u8?device_profile=STB_HLS_VCAS_LIVE_HD
+# --- FAMELACK KIDS SPANISH END ---
+
 # === KIDS — ENGLISH ===
 # --- AUTO KIDS ENGLISH START ---
 #EXTINF:-1 tvg-id="SSTVKids.en-all-babies" tvg-country="US" group-title="KIDS | English",All Babies Channel
