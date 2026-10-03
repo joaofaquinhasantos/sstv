@@ -8,10 +8,10 @@ PLAYLIST = Path("sstv.m3u")
 FAMELACK_KIDS = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/raw/categories/kids.json"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
 
-# Priority requested for SSTV: French -> Thai -> English.
-# Famelack currently exposes no Thai-language/country Kids records, so Thai remains
-# handled by the existing Thailand/Kids updater. Portuguese Nickelodeon is included
-# because it is the reusable Nickelodeon HLS feed currently exposed by Famelack.
+# Priority requested for SSTV: French -> Thai -> English. Famelack currently exposes
+# no Thai-language/country Kids records, so Thai remains handled by the existing
+# Thailand/Kids updater. Spanish/Portuguese are included only for major branded feeds
+# that Famelack exposes as directly reusable HLS.
 WANTED = [
     # French
     {"language": "French", "key": "fr-cartoonito-tom-jerry", "name": "Cartoonito France: Tom Et Jerry"},
@@ -43,7 +43,8 @@ WANTED = [
     {"language": "English", "key": "en-disneyjr-winnie", "name": "Disney Junior: Winnie the Pooh"},
     {"language": "English", "key": "en-bluey-official", "name": "Bluey - Official Channel"},
 
-    # Portuguese - reusable Famelack HLS Nickelodeon feed
+    # Major direct HLS branded feeds exposed by Famelack
+    {"language": "Spanish", "key": "es-disneyjr-latam-south", "name": "Disney Jr. Latin America South"},
     {"language": "Portuguese", "key": "pt-nickelodeon", "name": "Nickelodeon"},
 ]
 
@@ -51,6 +52,7 @@ LANG_COUNTRY_FALLBACK = {
     "French": "FR",
     "Thai": "TH",
     "English": "US",
+    "Spanish": "AR",
     "Portuguese": "BR",
 }
 
@@ -91,34 +93,39 @@ def youtube_watch_url(embed_url):
 
 def resolve_youtube_hls(embed_url):
     watch_url = youtube_watch_url(embed_url)
-    cmd = [
-        "yt-dlp",
-        "--no-warnings",
-        "--no-playlist",
-        "--socket-timeout", "20",
-        "--extractor-args", "youtube:player_client=web_embedded",
-        "-f", "best[protocol^=m3u8]/best",
-        "-g",
-        watch_url,
-    ]
-    try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=50, check=False)
-    except Exception as exc:
-        return None, f"yt-dlp {type(exc).__name__}: {exc}"
+    errors = []
+    # Anonymous clients only. No account cookies or authentication are used.
+    for client in ("web_embedded", "web_safari"):
+        cmd = [
+            "yt-dlp",
+            "--no-warnings",
+            "--no-playlist",
+            "--socket-timeout", "20",
+            "--extractor-args", f"youtube:player_client={client}",
+            "-f", "best[protocol^=m3u8]/best",
+            "-g",
+            watch_url,
+        ]
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=50, check=False)
+        except Exception as exc:
+            errors.append(f"{client}: {type(exc).__name__}: {exc}")
+            continue
 
-    if result.returncode != 0:
-        error = (result.stderr or result.stdout or "yt-dlp failed").strip().splitlines()
-        return None, error[-1] if error else "yt-dlp failed"
+        if result.returncode != 0:
+            lines = (result.stderr or result.stdout or "yt-dlp failed").strip().splitlines()
+            errors.append(f"{client}: {lines[-1] if lines else 'yt-dlp failed'}")
+            continue
 
-    urls = [line.strip() for line in result.stdout.splitlines() if line.strip().startswith("http")]
-    # Live YouTube feeds generally resolve to manifest.googlevideo HLS URLs. Prefer
-    # anything clearly HLS and only accept it after our own manifest check.
-    urls.sort(key=lambda u: (0 if ("m3u8" in u.lower() or "/manifest/hls" in u.lower()) else 1))
-    for url in urls:
-        ok, final, reason = healthy_hls(url)
-        if ok:
-            return url, "ok"
-    return None, "yt-dlp returned no working HLS manifest"
+        urls = [line.strip() for line in result.stdout.splitlines() if line.strip().startswith("http")]
+        urls.sort(key=lambda u: (0 if ("m3u8" in u.lower() or "/manifest/hls" in u.lower()) else 1))
+        for url in urls:
+            ok, final, reason = healthy_hls(url)
+            if ok:
+                return url, f"ok:{client}"
+        errors.append(f"{client}: no working HLS manifest")
+
+    return None, " | ".join(errors[-2:]) if errors else "no working HLS manifest"
 
 
 def old_managed_urls(text):
@@ -135,7 +142,6 @@ def old_managed_urls(text):
 def choose_source(record, old_url=None):
     sources = record.get("sources") or {}
 
-    # Prefer Famelack's direct HLS sources whenever present.
     for url in sources.get("streams") or []:
         if ".m3u8" not in url.lower():
             continue
@@ -144,17 +150,12 @@ def choose_source(record, old_url=None):
             return url, "direct-hls"
         print(f"FAMELACK KIDS DIRECT FAILED: {record['name']}: {url} ({reason})")
 
-    # Famelack also lists many official/public YouTube live channels. Resolve those
-    # with YouTube's embedded player client (these records are embeddable on Famelack)
-    # to temporary HLS manifests so normal IPTV players can consume them.
     for url in sources.get("youtube") or []:
         resolved, reason = resolve_youtube_hls(url)
         if resolved:
             return resolved, "youtube-hls"
         print(f"FAMELACK KIDS YOUTUBE FAILED: {record['name']}: {url} ({reason})")
 
-    # If a new resolution temporarily fails, keep the previous signed HLS URL while
-    # it is still alive instead of needlessly removing a working channel.
     if old_url:
         ok, final, reason = healthy_hls(old_url)
         if ok:
@@ -187,8 +188,6 @@ def replace_or_insert_language(text, language, blocks):
     if section_header in text:
         return text.replace(section_header, section_header + "\n" + replacement, 1)
 
-    # Create a new language section before English to keep preferred language groups
-    # together and preserve the rest of the playlist order.
     english_header = "# === KIDS — ENGLISH ==="
     if english_header not in text:
         raise RuntimeError("English Kids section missing")
@@ -206,7 +205,8 @@ def main():
     data = json.loads(raw)
     records = {item.get("name"): item for item in data if item.get("name")}
 
-    by_language = {"French": [], "Thai": [], "English": [], "Portuguese": []}
+    languages = ("French", "Thai", "English", "Spanish", "Portuguese")
+    by_language = {language: [] for language in languages}
     summary = []
 
     for wanted in WANTED:
@@ -234,9 +234,7 @@ def main():
         print(f"FAMELACK KIDS OK: {wanted['language']} | {wanted['name']} [{source_type}]")
 
     new_text = playlist_text
-    for language in ("French", "Thai", "English", "Portuguese"):
-        # Existing managed blocks are updated even if currently empty, removing stale
-        # dead URLs. New empty language sections are never created.
+    for language in languages:
         marker_exists = f"# --- FAMELACK KIDS {language.upper()} START ---" in new_text
         if by_language[language] or marker_exists:
             new_text = replace_or_insert_language(new_text, language, by_language[language])
@@ -245,7 +243,7 @@ def main():
         PLAYLIST.write_text(new_text, encoding="utf-8")
 
     print("FAMELACK KIDS SUMMARY:")
-    for language in ("French", "Thai", "English", "Portuguese"):
+    for language in languages:
         names = [name for lang, name, _ in summary if lang == language]
         print(f"  {language}: {len(names)}" + (" -> " + ", ".join(names) if names else ""))
 
