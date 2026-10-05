@@ -222,30 +222,10 @@ https://live.topnews.co.th/hls/topnews_a_720.m3u8
 https://amg00627-amg00627c31-rakuten-fr-3991.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanfrcc-rakutenfr/playlist.m3u8
 # --- FAMELACK KIDS FRENCH END ---
 # --- AUTO KIDS FRENCH START ---
-#EXTINF:-1 tvg-id="SSTVKids.fr-barbie" tvg-country="FR" group-title="KIDS | French",Barbie & Friends
-https://jmp2.uk/plu-686e7499e0ecf0e0cc25dbe3.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-beyblade" tvg-country="FR" group-title="KIDS | French",Beyblade
-https://jmp2.uk/plu-664c8ba33d173b00080ef0c8.m3u8
 #EXTINF:-1 tvg-id="SSTVKids.fr-bob-eponge" tvg-country="FR" group-title="KIDS | French",Bob l'éponge
 https://jmp2.uk/plu-5ffc8c345822750007e167de.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-charlotte-fraises" tvg-country="FR" group-title="KIDS | French",Charlotte aux Fraises
-https://jmp2.uk/plu-60dc6937b450ad0007377e48.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-detective-conan" tvg-country="FR" group-title="KIDS | French",Detective Conan
-https://jmp2.uk/plu-62f3e8ad2a8e8000077b013d.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-digimon" tvg-country="FR" group-title="KIDS | French",Digimon Adventure
-https://jmp2.uk/plu-617bae1d69bca3000729561e.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-doraemon" tvg-country="FR" group-title="KIDS | French",Doraemon
-https://jmp2.uk/plu-68b17414c23bb80b3c1d5bb5.m3u8
 #EXTINF:-1 tvg-id="SSTVKids.fr-icarly" tvg-country="FR" group-title="KIDS | French",iCarly
 https://jmp2.uk/plu-5f8ecc7aa44d9c00081fca29.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-inazuma" tvg-country="FR" group-title="KIDS | French",Inazuma Eleven
-https://jmp2.uk/plu-611e75226b7f420007c3f319.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-schtroumpfs" tvg-country="FR" group-title="KIDS | French",Les Schtroumpfs
-https://jmp2.uk/plu-68b16d2282862c1f067dc763.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-mattel-jr" tvg-country="FR" group-title="KIDS | French",Mattel Junior
-https://jmp2.uk/plu-686e74b0e48af72bc266e798.m3u8
-#EXTINF:-1 tvg-id="SSTVKids.fr-olive-tom" tvg-country="FR" group-title="KIDS | French",Olive & Tom
-https://jmp2.uk/plu-662a63275a402e00086bc8a5.m3u8
 #EXTINF:-1 tvg-id="SSTVKids.fr-caillou" tvg-country="FR" group-title="KIDS | French",Caillou
 https://do7nccdsswstc.cloudfront.net/v1/manifest/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-1aso0bc668saa/a5233c83-f772-4a81-959a-45ec7877ef61/5.m3u8
 # --- AUTO KIDS FRENCH END ---
