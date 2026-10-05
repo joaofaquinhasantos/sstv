@@ -196,7 +196,7 @@ https://live-us1.thaimomo.com/live-as/chamarin-3/playlist.m3u8
 https://live-us1.thaimomo.com/live-as/ch7hd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="pptvhd36.th" tvg-name="PPTV HD 36" tvg-chno="36" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/PPTV_HD_36_Logo.svg/640px-PPTV_HD_36_Logo.svg.png" group-title="Thailand",PPTV HD 36
 #EXTVLCOPT:http-user-agent=Mozilla/5.0
-https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_access_id=fleet-2966&x_ark_auth_type=ark-v2&x_ark_expires=1791201602&x_ark_path_prefix=%2Fbamm-csai%2F&x_ark_signature=YlAfUEm_TgrKUjd5pDnACQ
+https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_access_id=fleet-2966&x_ark_auth_type=ark-v2&x_ark_expires=1791232801&x_ark_path_prefix=%2Fbamm-csai%2F&x_ark_signature=kaIHXBfWCrmGw0l1TTOffw
 
 #EXTINF:-1 tvg-id="13SiamThai.th@SD" tvg-country="TH" group-title="Thailand",13 Siam Thai
 https://live.x2.co.th/live/13livetv-th.m3u8
