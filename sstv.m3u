@@ -136,14 +136,14 @@ https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8
 https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 
 # === BRAZIL ===
-#EXTINF:-1 tvg-name="Rede Globo" tvg-id="RedeGlobo.br" tvg-country="BR" group-title="Brazil",Rede Globo
+#EXTINF:-1 tvg-name="Globo" tvg-id="RedeGlobo.br" tvg-country="BR" group-title="Brazil",Globo
 https://media2.cdntvms.com.br/tv_morena_dorados/index.m3u8
 
 #EXTINF:-1 tvg-name="Record News" tvg-id="RecordNews.br" tvg-country="BR" group-title="Brazil",Record News
 https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
 
-#EXTINF:-1 tvg-name="RecordTV" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",RecordTV
-https://cdn.jmvstream.com/w/LVW-10842/LVW10842_513N26MDBL/chunklist.m3u8
+#EXTINF:-1 tvg-name="Record" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",Record
+https://media.cdntvms.com.br/record_nacional_sat/index.m3u8
 
 #EXTINF:-1 tvg-name="RecordTV Interior SP" tvg-id="RecordTVInteriorSP.br" tvg-country="BR" group-title="Brazil",RecordTV Interior SP
 http://200.77.176.130:8000/udp/224.0.0.4:49152
@@ -151,8 +151,8 @@ http://200.77.176.130:8000/udp/224.0.0.4:49152
 #EXTINF:-1 tvg-name="SBT Interior" tvg-id="SBTInterior.br" tvg-country="BR" group-title="Brazil",SBT Interior
 https://cdn.jmvstream.com/w/LVW-10801/LVW10801_Xvg4R0u57n/playlist.m3u8
 
-#EXTINF:-1 tvg-name="SBT Nacional" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT Nacional
-https://6836041ea1117.streamlock.net/cverde/cverde/playlist.m3u8
+#EXTINF:-1 tvg-name="SBT" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT
+https://media.cdntvms.com.br/sbt_sat/index.m3u8
 
 #EXTINF:-1 tvg-name="SBT News" tvg-id="SBTNews.br" tvg-country="BR" group-title="Brazil",SBT News
 https://dai.google.com/linear/hls/event/1XSOdtQ0SH2G8OEmEfGgjQ/master.m3u8
@@ -196,7 +196,7 @@ https://live-us1.thaimomo.com/live-as/chamarin-3/playlist.m3u8
 https://live-us1.thaimomo.com/live-as/ch7hd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="pptvhd36.th" tvg-name="PPTV HD 36" tvg-chno="36" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/PPTV_HD_36_Logo.svg/640px-PPTV_HD_36_Logo.svg.png" group-title="Thailand",PPTV HD 36
 #EXTVLCOPT:http-user-agent=Mozilla/5.0
-https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_access_id=fleet-2966&x_ark_auth_type=ark-v2&x_ark_expires=1791442801&x_ark_path_prefix=%2Fbamm-csai%2F&x_ark_signature=Urh9hq37aGCcWfV7B3WJ-w
+https://pptv36-9h0yba.cdn.byteark.com/bamm-csai/playlist.m3u8?x_ark_access_id=fleet-2966&x_ark_auth_type=ark-v2&x_ark_expires=1791462601&x_ark_path_prefix=%2Fbamm-csai%2F&x_ark_signature=9NOlLOQz33noOLsjdvxtag
 
 #EXTINF:-1 tvg-id="13SiamThai.th@SD" tvg-country="TH" group-title="Thailand",13 Siam Thai
 https://live.x2.co.th/live/13livetv-th.m3u8
