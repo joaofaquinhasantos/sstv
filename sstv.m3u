@@ -136,13 +136,13 @@ https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8
 https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 
 # === BRAZIL ===
-#EXTINF:-1 tvg-name="Rede Globo" tvg-id="RedeGlobo.br" tvg-country="BR" group-title="Brazil",Rede Globo
-https://media2.cdntvms.com.br/tv_morena_dorados/index.m3u8
+#EXTINF:-1 tvg-name="Globo" tvg-id="RedeGlobo.br" tvg-country="BR" group-title="Brazil",Globo
+https://cdn-sp2.satlabscloud.com.br/RBS_HD/index.m3u8?token=Mw3YKkujzIi9hYQJ6kAQjQvly2VdBNuGPjHOq
 
 #EXTINF:-1 tvg-name="Record News" tvg-id="RecordNews.br" tvg-country="BR" group-title="Brazil",Record News
 https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
 
-#EXTINF:-1 tvg-name="RecordTV" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",RecordTV
+#EXTINF:-1 tvg-name="Record" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",Record
 https://cdn.jmvstream.com/w/LVW-10842/LVW10842_513N26MDBL/chunklist.m3u8
 
 #EXTINF:-1 tvg-name="RecordTV Interior SP" tvg-id="RecordTVInteriorSP.br" tvg-country="BR" group-title="Brazil",RecordTV Interior SP
@@ -151,7 +151,7 @@ http://200.77.176.130:8000/udp/224.0.0.4:49152
 #EXTINF:-1 tvg-name="SBT Interior" tvg-id="SBTInterior.br" tvg-country="BR" group-title="Brazil",SBT Interior
 https://cdn.jmvstream.com/w/LVW-10801/LVW10801_Xvg4R0u57n/playlist.m3u8
 
-#EXTINF:-1 tvg-name="SBT Nacional" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT Nacional
+#EXTINF:-1 tvg-name="SBT" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT
 https://6836041ea1117.streamlock.net/cverde/cverde/playlist.m3u8
 
 #EXTINF:-1 tvg-name="SBT News" tvg-id="SBTNews.br" tvg-country="BR" group-title="Brazil",SBT News
