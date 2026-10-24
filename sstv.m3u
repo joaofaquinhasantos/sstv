@@ -139,7 +139,7 @@ https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 #EXTINF:-1 tvg-name="Record News" tvg-id="RecordNews.br" tvg-country="BR" group-title="Brazil",Record News
 https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
 
-#EXTINF:-1 tvg-name="RecordTV" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",RecordTV
+#EXTINF:-1 tvg-name="Record" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",Record
 https://cdn.jmvstream.com/w/LVW-10842/LVW10842_513N26MDBL/chunklist.m3u8
 
 #EXTINF:-1 tvg-name="RecordTV Interior SP" tvg-id="RecordTVInteriorSP.br" tvg-country="BR" group-title="Brazil",RecordTV Interior SP
@@ -151,7 +151,7 @@ https://video09.logicahost.com.br/sbtcuiaba/sbtcuiaba/playlist.m3u8
 #EXTINF:-1 tvg-name="SBT Interior" tvg-id="SBTInterior.br" tvg-country="BR" group-title="Brazil",SBT Interior
 https://cdn.jmvstream.com/w/LVW-10801/LVW10801_Xvg4R0u57n/playlist.m3u8
 
-#EXTINF:-1 tvg-name="SBT Nacional" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT Nacional
+#EXTINF:-1 tvg-name="SBT" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT
 https://6836041ea1117.streamlock.net/cverde/cverde/playlist.m3u8
 
 #EXTINF:-1 tvg-name="SBT News" tvg-id="SBTNews.br" tvg-country="BR" group-title="Brazil",SBT News
