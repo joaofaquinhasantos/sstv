@@ -136,6 +136,9 @@ https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8
 https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 
 # === BRAZIL ===
+#EXTINF:-1 tvg-name="TV Globo Brasilia" tvg-id="TVGloboBrasilia.br" tvg-country="BR" group-title="Brazil",TV Globo Brasilia
+http://79.127.238.228:14173/
+
 #EXTINF:-1 tvg-name="Record News" tvg-id="RecordNews.br" tvg-country="BR" group-title="Brazil",Record News
 https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
 
