@@ -60,9 +60,6 @@ https://live-20minutestv.digiteka.com/1961167769/index.m3u8
 #EXTINF:-1 tvg-name="RTP1" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/RTP1_-_Logo_2016.svg/500px-RTP1_-_Logo_2016.svg.png" tvg-id="RTP1.pt" tvg-chno="1" tvg-country="PT" group-title="Portugal",RTP1
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0
 https://streaming-live.rtp.pt/liverepeater/rtp1HD.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="RTP2" tvg-logo="https://upload.wikimedia.org/wikipedia/en/4/4d/Rtp2_2016_logo.png" tvg-id="RTP2.pt" tvg-chno="2" tvg-country="PT" group-title="Portugal",RTP2
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0
-https://streaming-live.rtp.pt/liverepeater/rtp2HD.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="SIC" tvg-logo="https://i.imgur.com/SPMqiDG.png" tvg-id="SIC.pt" tvg-chno="4" tvg-country="PT" group-title="Portugal",SIC
 https://production-fast-sic.content.okast.tv/fa2e8c4385712f9aa54bbe52b1bd9b6b/channels/d9070446-8448-455e-8075-773b1ba12562/fc831b20-f252-4e7d-8cc5-2d05f4d43c1c/media_.m3u8
 #EXTINF:-1 tvg-name="TVI" tvg-logo="https://upload.wikimedia.org/wikipedia/en/6/63/TVI_logo_2017.png" tvg-id="TVI.pt" tvg-chno="5" tvg-country="PT" group-title="Portugal",TVI
@@ -162,8 +159,6 @@ https://live-us1.thaimomo.com/live-as/ch3hd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="AmarinTV.th@SD" tvg-chno="34" group-title="Thailand",Amarin TV 34
 https://live-us1.thaimomo.com/live-as/chamarin-3/playlist.m3u8
 
-#EXTINF:-1 tvg-id="13SiamThai.th@SD" tvg-country="TH" group-title="Thailand",13 Siam Thai
-https://live.x2.co.th/live/13livetv-th.m3u8
 
 #EXTINF:-1 tvg-id="CoolChannel.th@SD" tvg-country="TH" group-title="Thailand",Cool Channel
 https://live-iptv.cool-channel.com/cool/live-720P.m3u8
