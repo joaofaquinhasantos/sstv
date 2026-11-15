@@ -9,8 +9,24 @@
 http://89.187.185.76:8080/France3/index.m3u8
 #EXTINF:-1 tvg-name="M6" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Logo_M6_%282020%2C_fond_clair%29.svg/40px-Logo_M6_%282020%2C_fond_clair%29.svg.png" tvg-id="M6.fr" tvg-chno="6" tvg-country="FR" group-title="France",M6
 http://99.27.51.147:8080/M6/index.m3u8
+#EXTINF:-1 tvg-name="LCP" tvg-logo="https://upload.wikimedia.org/wikipedia/fr/thumb/6/6a/Logo_LCP-AN_-_Public_S%C3%A9nat_%282019%29.svg/60px-Logo_LCP-AN_-_Public_S%C3%A9nat_%282019%29.svg.png" tvg-id="LCP.fr" tvg-chno="13" tvg-country="FR" group-title="France",LCP
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/publicsenat/publicsenat-dm.m3u8
+#EXTINF:-1 tvg-name="BFM TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Logo_BFM_TV_%282019%29.png/60px-Logo_BFM_TV_%282019%29.png" tvg-id="BFMTV.fr" tvg-chno="15" tvg-country="FR" group-title="France",BFM TV
+https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8
 #EXTINF:-1 tvg-name="Gulli" tvg-logo="https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/18._Gulli.png/60px-18._Gulli.png" tvg-id="Gulli.fr" tvg-chno="18" tvg-country="FR" group-title="France",Gulli
 http://99.27.51.147:8080/Gulli/index.m3u8
+#EXTINF:-1 tvg-name="L'Équipe" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/L%27%C3%89quipe_wordmark.svg/500px-L%27%C3%89quipe_wordmark.svg.png" tvg-id="LEquipe.fr" tvg-chno="21" tvg-country="FR" group-title="France",L'Équipe
+https://dq37unyetkpcz.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-m04j89j7k5gtp/LEquipe_FR.m3u8
+#EXTINF:-1 tvg-name="RMC Life" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Ch%C3%A9rie_25_2015_logo.svg/500px-Ch%C3%A9rie_25_2015_logo.svg.png" tvg-id="RMCLife.fr" tvg-chno="25" tvg-country="FR" group-title="France",RMC Life
+https://d3dcdjv6dx07iz.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-eaaww2dyp3iih/RMC_Life_FR.m3u8
+#EXTINF:-1 tvg-name="RMC Découverte" tvg-id="RMCDecouverte.fr" tvg-country="FR" group-title="France",RMC Découverte
+https://d16zzycxcd0m0r.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-hixvx5kymecr9/RMC_Decouverte_FR.m3u8
+#EXTINF:-1 tvg-name="RMC Story" tvg-id="RMCStory.fr" tvg-country="FR" group-title="France",RMC Story
+https://d15aro46bnpfm8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-fqkqiax1078up/RMC_Story_FR.m3u8
+#EXTINF:-1 tvg-name="France 24" tvg-logo="https://i.imgur.com/61MSiq9.png" tvg-id="France24French.fr" tvg-chno="28" tvg-country="FR" group-title="France",France 24
+https://live.france24.com/hls/live/2037179-b/F24_FR_HI_HLS/master_500.m3u8
+#EXTINF:-1 tvg-name="Africanews" tvg-logo="https://i.imgur.com/xocvePC.png" tvg-id="Africanews.cg" tvg-chno="33" tvg-country="FR" group-title="France",Africanews Français
+https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8
 #EXTINF:-1 tvg-name="TV Mulhouse" tvg-logo="https://i.imgur.com/4esQG8H.png" tvg-id="TVMulhouse.fr" tvg-chno="-" tvg-country="FR" group-title="France",TV Mulhouse
 http://194.163.157.137:8080/hls/radiomulhouse.m3u8
 #EXTINF:-1 tvg-name="TV Alsace" tvg-logo="https://i.imgur.com/zaJDEOv.png" tvg-id="TVAlsace.fr" tvg-chno="-" tvg-country="FR" group-title="France",TV Alsace
@@ -19,6 +35,11 @@ http://194.163.157.137:8080/hls/radioalsace.m3u8
 https://srv.webtvmanager.fr:3697/stream/play.m3u8
 
 # === PORTUGAL ===
+#EXTINF:-1 tvg-name="RTP1" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/RTP1_-_Logo_2016.svg/500px-RTP1_-_Logo_2016.svg.png" tvg-id="RTP1.pt" tvg-chno="1" tvg-country="PT" group-title="Portugal",RTP1
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (X11; Linux x86_64; rv:152.0) Gecko/20100101 Firefox/152.0
+#EXTVLCOPT:http-origin=https://www.rtp.pt
+#EXTVLCOPT:http-referrer=https://www.rtp.pt/play/direto/rtp1
+https://streaming-live.rtp.pt/liverepeater/smil:rtp1HD.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="RTP2" tvg-logo="https://upload.wikimedia.org/wikipedia/en/4/4d/Rtp2_2016_logo.png" tvg-id="RTP2.pt" tvg-chno="2" tvg-country="PT" group-title="Portugal",RTP2 Ⓖ
 https://streaming-live.rtp.pt/liverepeater/rtp2HD.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="RTP3" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/b/b9/Rtp3.png" tvg-id="RTP3.pt" tvg-chno="3" tvg-country="PT" group-title="Portugal",RTP3
@@ -31,6 +52,10 @@ https://raw.githubusercontent.com/thomraider12/canaistvpt/main/m3u8s/tvi.m3u8
 https://streaming-live.rtp.pt/liverepeater/smil:rtpacoresHD.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="RTP Madeira" tvg-logo="https://upload.wikimedia.org/wikipedia/en/a/ac/RTP_Madeira_2016.png" tvg-id="RTPMadeira.pt" tvg-chno="7" tvg-country="PT" group-title="Portugal",RTP Madeira Ⓢ
 https://streaming-live.rtp.pt/liverepeater/smil:rtpmadeira.smil/playlist.m3u8
+#EXTINF:-1 tvg-name="RTP notícias" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/b/b9/Rtp3.png" tvg-id="RTPNoticias.pt" tvg-chno="8" tvg-country="PT" group-title="Portugal",RTP notícias
+https://streaming-live.rtp.pt/liverepeater/smil:rtpnHD.smil/playlist.m3u8
+#EXTINF:-1 tvg-name="RTP Memória" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/79/RtpMemoria_positivo_horiz_RGB.png" tvg-id="RTPMemoria.pt" tvg-chno="9" tvg-country="PT" group-title="Portugal",RTP Memória
+https://streaming-live.rtp.pt/liverepeater/smil:rtpmem.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="RTP Mundo" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/RTP_Mundo.svg/330px-RTP_Mundo.svg.png" tvg-id="RTPInternacional.pt" tvg-chno="10" tvg-country="PT" group-title="Portugal",RTP Mundo
 https://streaming-live.rtp.pt/liverepeater/smil:rtpi.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Porto Canal" tvg-logo="https://i.imgur.com/wsyvP2H.png" tvg-id="PortoCanal.pt" tvg-chno="11" tvg-country="PT" group-title="Portugal",Porto Canal Ⓢ
@@ -73,6 +98,8 @@ https://video09.logicahost.com.br/sbtmutum/sbtmutum/playlist.m3u8
 https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="ThaiPBS.th@SD" tvg-chno="3" group-title="Thailand",Thai PBS
 https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
+#EXTINF:-1 tvg-id="Channel5.th@SD" tvg-chno="5" group-title="Thailand",Channel 5 HD
+https://live-us1.thaimomo.com/live-as/ch5hd-2/playlist.m3u8
 #EXTINF:-1 tvg-id="TSports7.th@SD" tvg-chno="7" group-title="Thailand",T Sports 7
 https://live-us1.thaimomo.com/live-as/chtsport-1/playlist.m3u8
 #EXTINF:-1 tvg-id="TPTV.th@SD" tvg-chno="10" group-title="Thailand",TPTV
@@ -87,10 +114,10 @@ https://live-us1.thaimomo.com/live-as/chworkpointt-3/playlist.m3u8
 https://live-us1.thaimomo.com/live-as/chTrue4u-2/playlist.m3u8
 #EXTINF:-1 tvg-id="GMM25.th@SD" tvg-chno="25" group-title="Thailand",GMM25
 https://live-us1.thaimomo.com/live-as/chgmmchannel-3/playlist.m3u8
-#EXTINF:-1 tvg-id="Channel8.th@SD" tvg-chno="27" group-title="Thailand",Channel 8
-https://live-us1.thaimomo.com/live-as/cheight-3/playlist.m3u8
 #EXTINF:-1 tvg-id="MONO29.th@SD" tvg-chno="29" group-title="Thailand",MONOMAX SPORTS TV 29
 https://live-us1.thaimomo.com/live-as/chmono29-2/playlist.m3u8
+#EXTINF:-1 tvg-id="MCOTHD.th@HD" tvg-chno="30" group-title="Thailand",9 MCOT HD
+https://live-us1.thaimomo.com/live-as/chmcothd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="One31.th@SD" tvg-chno="31" group-title="Thailand",One31
 https://live-us1.thaimomo.com/live-as/chone-3/playlist.m3u8
 #EXTINF:-1 tvg-id="ThairathTV.th@SD" tvg-chno="32" group-title="Thailand",Thairath TV
@@ -99,8 +126,6 @@ https://live-us1.thaimomo.com/live-as/chthairathhd-3/playlist.m3u8
 https://live-us1.thaimomo.com/live-as/ch3hd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="AmarinTV.th@SD" tvg-chno="34" group-title="Thailand",Amarin TV 34
 https://live-us1.thaimomo.com/live-as/chamarin-3/playlist.m3u8
-#EXTINF:-1 tvg-id="Channel7.th@SD" tvg-chno="35" group-title="Thailand",Channel 7 HD
-https://live-us1.thaimomo.com/live-as/ch7hd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="13SiamThai.th@SD" tvg-country="TH" group-title="Thailand",13 Siam Thai
 https://live.x2.co.th/live/13livetv-th.m3u8
 #EXTINF:-1 tvg-id="CoolChannel.th@SD" tvg-country="TH" group-title="Thailand",Cool Channel
