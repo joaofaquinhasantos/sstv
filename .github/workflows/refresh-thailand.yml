@@ -41,7 +41,6 @@ jobs:
 
           CHANNELS = {
               "3HD.th": ("3HD", 33, False),
-              "13SiamThai.th": ("13 Siam Thai", None, True),
               "ALTV.th": ("ALTV", None, True),
               "AmarinTV.th": ("Amarin TV 34", 34, False),
               "CoolChannel.th": ("Cool Channel", None, True),
