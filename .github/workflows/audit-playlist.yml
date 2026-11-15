@@ -1,0 +1,154 @@
+name: Audit IPTV playlist health
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/audit-playlist.yml"
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deep-check IPTV entries
+        shell: bash
+        run: |
+          python - <<'PY'
+          import concurrent.futures
+          import re
+          import ssl
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
+          ctx = ssl.create_default_context()
+          text = Path("sstv.m3u").read_text(encoding="utf-8")
+          lines = text.splitlines()
+
+          entries = []
+          for i, line in enumerate(lines):
+              if not line.startswith("#EXTINF"):
+                  continue
+              group = re.search(r'group-title="([^"]+)"', line)
+              group = group.group(1) if group else "(none)"
+              name = line.rsplit(",", 1)[-1].strip()
+              opts = {}
+              url = None
+              j = i + 1
+              while j < len(lines) and not lines[j].startswith("#EXTINF"):
+                  s = lines[j].strip()
+                  low = s.lower()
+                  if low.startswith("#extvlcopt:http-user-agent="):
+                      opts["User-Agent"] = s.split("=",1)[1]
+                  elif low.startswith("#extvlcopt:http-referrer="):
+                      opts["Referer"] = s.split("=",1)[1]
+                  elif s.startswith("http://") or s.startswith("https://"):
+                      url = s
+                      break
+                  j += 1
+              if url:
+                  entries.append((group, name, url, opts))
+
+          WEBPAGE_HOSTS = {
+              "youtube.com","www.youtube.com","youtu.be","dailymotion.com","www.dailymotion.com",
+              "lcp.fr","www.lcp.fr","publicsenat.fr","www.publicsenat.fr",
+          }
+
+          def fetch(url, headers=None, timeout=12, max_bytes=160000):
+              h = {"User-Agent": UA, "Accept": "*/*"}
+              if headers: h.update(headers)
+              req = urllib.request.Request(url, headers=h)
+              with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                  body = r.read(max_bytes)
+                  return r.geturl(), r.status, dict(r.headers), body
+
+          def first_uri(m3u, base):
+              for raw in m3u.splitlines():
+                  s = raw.strip()
+                  if not s or s.startswith("#"): continue
+                  return urllib.parse.urljoin(base, s)
+              return None
+
+          def audit_one(item):
+              group, name, url, headers = item
+              host = (urllib.parse.urlparse(url).hostname or "").lower()
+              if host in WEBPAGE_HOSTS:
+                  return item, "UNSUPPORTED", "web page URL, not IPTV stream"
+
+              try:
+                  final, status, rh, body = fetch(url, headers=headers)
+              except Exception as exc:
+                  return item, "FAIL", f"{type(exc).__name__}: {exc}"
+
+              if not (200 <= status < 400):
+                  return item, "FAIL", f"HTTP {status}"
+
+              ctype = (rh.get("Content-Type") or "").lower()
+              decoded = body.decode("utf-8", "ignore")
+              low = decoded.lower()
+
+              looks_hls = ".m3u8" in url.lower() or "#extm3u" in low or "mpegurl" in ctype
+              if looks_hls:
+                  if "#extm3u" not in low:
+                      return item, "FAIL", "not a valid HLS manifest"
+                  child = first_uri(decoded, final)
+                  if child:
+                      try:
+                          f2, s2, h2, b2 = fetch(child, headers=headers, timeout=10, max_bytes=120000)
+                          if not (200 <= s2 < 400):
+                              return item, "FAIL", f"child HTTP {s2}"
+                          d2 = b2.decode("utf-8", "ignore")
+                          if "#extm3u" in d2.lower():
+                              seg = first_uri(d2, f2)
+                              if seg:
+                                  try:
+                                      _, s3, h3, b3 = fetch(seg, headers=headers, timeout=10, max_bytes=4096)
+                                      if not (200 <= s3 < 400) or not b3:
+                                          return item, "FAIL", f"segment HTTP {s3}"
+                                  except Exception as exc:
+                                      return item, "FAIL", f"segment {type(exc).__name__}: {exc}"
+                      except Exception as exc:
+                          return item, "FAIL", f"child {type(exc).__name__}: {exc}"
+                  return item, "OK", "HLS manifest + child/segment reachable"
+
+              if "<html" in low or "text/html" in ctype:
+                  return item, "UNSUPPORTED", "HTML response, not IPTV stream"
+              if body:
+                  return item, "OK-DIRECT", f"direct stream response ({ctype or 'unknown content-type'})"
+              return item, "FAIL", "empty response"
+
+          results = []
+          with concurrent.futures.ThreadPoolExecutor(max_workers=20) as ex:
+              futures = [ex.submit(audit_one, e) for e in entries]
+              for fut in concurrent.futures.as_completed(futures):
+                  results.append(fut.result())
+
+          order = {"FAIL":0, "UNSUPPORTED":1, "OK-DIRECT":2, "OK":3}
+          results.sort(key=lambda x: (order.get(x[1],9), x[0][0].lower(), x[0][1].lower()))
+
+          counts = {}
+          group_counts = {}
+          for item, status, reason in results:
+              counts[status] = counts.get(status,0)+1
+              group_counts.setdefault(item[0], {}).setdefault(status,0)
+              group_counts[item[0]][status] += 1
+              print(f"{status:11} | {item[0]} | {item[1]} | {reason} | {item[2]}")
+
+          print("\nSUMMARY")
+          print(counts)
+          for g in sorted(group_counts):
+              print(g, group_counts[g])
+
+          failed = [r for r in results if r[1] in ("FAIL","UNSUPPORTED")]
+          if failed:
+              print(f"::warning::{len(failed)} playlist entries failed or are unsupported")
+          PY
