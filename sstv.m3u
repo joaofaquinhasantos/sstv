@@ -23,31 +23,35 @@ http://151.80.18.177:86/TMC/index.m3u8
 #EXTINF:-1 tvg-name="TFX" tvg-logo="https://upload.wikimedia.org/wikipedia/fr/thumb/8/83/TFX_logo_2018.svg/500px-TFX_logo_2018.svg.png" tvg-id="TFX.fr" tvg-chno="11" tvg-country="FR" group-title="France",TFX
 http://145.239.5.177/315/index.m3u8
 #EXTINF:-1 tvg-name="LCP" tvg-logo="https://upload.wikimedia.org/wikipedia/fr/thumb/6/6a/Logo_LCP-AN_-_Public_S%C3%A9nat_%282019%29.svg/60px-Logo_LCP-AN_-_Public_S%C3%A9nat_%282019%29.svg.png" tvg-id="LCP.fr" tvg-chno="13" tvg-country="FR" group-title="France",LCP
-https://lcp.fr/le-live-lcp-tnt-5433
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/publicsenat/publicsenat-dm.m3u8
 #EXTINF:-1 tvg-name="Public Sénat" tvg-logo="https://i.imgur.com/bJOdFT1.png" tvg-id="PublicSenat.fr" tvg-chno="13" tvg-country="FR" group-title="France",Public Sénat
 https://www.publicsenat.fr/direct
 #EXTINF:-1 tvg-name="France 4" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/France_4_2018.svg/960px-France_4_2018.svg.png" tvg-id="France4.fr" tvg-chno="14" tvg-country="FR" group-title="France",France 4
 http://176.65.146.100:8047/play/a074/index.m3u8
 #EXTINF:-1 tvg-name="BFM TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Logo_BFM_TV_%282019%29.png/60px-Logo_BFM_TV_%282019%29.png" tvg-id="BFMTV.fr" tvg-chno="15" tvg-country="FR" group-title="France",BFM TV
-https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_TV/index.m3u8?end=END&start=LIVE
+https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8
 #EXTINF:-1 tvg-name="CNews" tvg-logo="https://i.imgur.com/UMRGAHx.png" tvg-id="CNews.fr" tvg-chno="16" tvg-country="FR" group-title="France",CNews Ⓓ
 https://www.dailymotion.com/video/x3b68jn
 #EXTINF:-1 tvg-name="CStar" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Logo_CStar_2016.svg/500px-Logo_CStar_2016.svg.png" tvg-id="CStar.fr" tvg-chno="17" tvg-country="FR" group-title="France",CStar
 http://145.239.5.177/361/index.m3u8
 #EXTINF:-1 tvg-name="Gulli" tvg-logo="https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/18._Gulli.png/60px-18._Gulli.png" tvg-id="Gulli.fr" tvg-chno="18" tvg-country="FR" group-title="France",Gulli
 http://99.27.51.147:8080/Gulli/index.m3u8
-#EXTINF:-1 tvg-name="L'Équipe" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/L%27%C3%89quipe_wordmark.svg/500px-L%27%C3%89quipe_wordmark.svg.png" tvg-id="LEquipe.fr" tvg-chno="21" tvg-country="FR" group-title="France",L'Équipe ⒹⒼ
-https://www.dailymotion.com/video/x2lefik
+#EXTINF:-1 tvg-name="L'Équipe" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/L%27%C3%89quipe_wordmark.svg/500px-L%27%C3%89quipe_wordmark.svg.png" tvg-id="LEquipe.fr" tvg-chno="21" tvg-country="FR" group-title="France",L'Équipe
+https://dq37unyetkpcz.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-m04j89j7k5gtp/LEquipe_FR.m3u8
 #EXTINF:-1 tvg-name="6ter" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Logo_6ter_2016.svg/500px-Logo_6ter_2016.svg.png" tvg-id="6ter.fr" tvg-chno="22" tvg-country="FR" group-title="France",6ter
 http://145.239.5.177/314/index.m3u8
-#EXTINF:-1 tvg-name="RMC Life (ex-Chérie 25)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Ch%C3%A9rie_25_2015_logo.svg/500px-Ch%C3%A9rie_25_2015_logo.svg.png" tvg-id="RMCLife.fr" tvg-chno="25" tvg-country="FR" group-title="France",RMC Life (ex-Chérie 25)
-http://145.239.5.177/333/index.m3u8
+#EXTINF:-1 tvg-name="RMC Life" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Ch%C3%A9rie_25_2015_logo.svg/500px-Ch%C3%A9rie_25_2015_logo.svg.png" tvg-id="RMCLife.fr" tvg-chno="25" tvg-country="FR" group-title="France",RMC Life
+https://d3dcdjv6dx07iz.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-eaaww2dyp3iih/RMC_Life_FR.m3u8
+#EXTINF:-1 tvg-name="RMC Découverte" tvg-id="RMCDecouverte.fr" tvg-country="FR" group-title="France",RMC Découverte
+https://d16zzycxcd0m0r.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-hixvx5kymecr9/RMC_Decouverte_FR.m3u8
+#EXTINF:-1 tvg-name="RMC Story" tvg-id="RMCStory.fr" tvg-country="FR" group-title="France",RMC Story
+https://d15aro46bnpfm8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-fqkqiax1078up/RMC_Story_FR.m3u8
 #EXTINF:-1 tvg-name="LCI" tvg-logo="" tvg-id="LCI.fr" tvg-chno="26" tvg-country="FR" group-title="France",LCI
 http://145.239.5.177/368/index.m3u8
 #EXTINF:-1 tvg-name="franceinfo:" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Franceinfo.svg/500px-Franceinfo.svg.png" tvg-id="Franceinfo.fr" tvg-chno="27" tvg-country="FR" group-title="France",franceinfo: Ⓨ
 https://www.youtube.com/c/franceinfo/live
-#EXTINF:-1 tvg-name="France 24" tvg-logo="https://i.imgur.com/61MSiq9.png" tvg-id="France24French.fr" tvg-chno="28" tvg-country="FR" group-title="France",France 24 Ⓨ
-https://www.youtube.com/c/FRANCE24/live
+#EXTINF:-1 tvg-name="France 24" tvg-logo="https://i.imgur.com/61MSiq9.png" tvg-id="France24French.fr" tvg-chno="28" tvg-country="FR" group-title="France",France 24
+https://live.france24.com/hls/live/2037179-b/F24_FR_HI_HLS/master_500.m3u8
 #EXTINF:-1 tvg-name="TV5 Monde Info" tvg-logo="https://i.imgur.com/NcysrWH.png" tvg-id="TV5MondeInfo.fr" tvg-chno="29" tvg-country="FR" group-title="France",TV5 Monde Info
 https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8
 #EXTINF:-1 tvg-name="TV5 Monde FBS" tvg-logo="https://i.imgur.com/uPmwTo9.png" tvg-id="TV5MondeFranceBelgiumSwitzerland.fr" tvg-chno="30" tvg-country="FR" group-title="France",TV5 Monde FBS
@@ -58,8 +62,8 @@ https://www.youtube.com/euronewsfr/live
 https://ott.tv5monde.com/Content/HLS/Live/channel(europe)/index.m3u8
 #EXTINF:-1 tvg-name="France Inter" tvg-logo="https://i.imgur.com/d9Ncl8m.png" tvg-id="FranceInter.fr" tvg-chno="32" tvg-country="FR" group-title="France",France Inter Ⓨ
 https://www.youtube.com/c/FranceInter/live
-#EXTINF:-1 tvg-name="Africanews" tvg-logo="https://i.imgur.com/xocvePC.png" tvg-id="Africanews.cg" tvg-chno="33" tvg-country="FR" group-title="France",Africanews Ⓨ
-https://www.youtube.com/c/Africanewsfr/live
+#EXTINF:-1 tvg-name="Africanews" tvg-logo="https://i.imgur.com/xocvePC.png" tvg-id="Africanews.cg" tvg-chno="33" tvg-country="FR" group-title="France",Africanews Français
+https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8
 #EXTINF:-1 tvg-name="CGTN Français" tvg-logo="https://i.imgur.com/fMsJYzl.png" tvg-id="CGTNFrench.cn" tvg-chno="34" tvg-country="FR" group-title="France",CGTN Français
 https://news.cgtn.com/resource/live/french/cgtn-f.m3u8
 #EXTINF:-1 tvg-name="TV Mulhouse" tvg-logo="https://i.imgur.com/4esQG8H.png" tvg-id="TVMulhouse.fr" tvg-chno="-" tvg-country="FR" group-title="France",TV Mulhouse
@@ -71,6 +75,9 @@ https://srv.webtvmanager.fr:3697/stream/play.m3u8
 
 # === PORTUGAL ===
 #EXTINF:-1 tvg-name="RTP1" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/RTP1_-_Logo_2016.svg/500px-RTP1_-_Logo_2016.svg.png" tvg-id="RTP1.pt" tvg-chno="1" tvg-country="PT" group-title="Portugal",RTP1
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (X11; Linux x86_64; rv:152.0) Gecko/20100101 Firefox/152.0
+#EXTVLCOPT:http-origin=https://www.rtp.pt
+#EXTVLCOPT:http-referrer=https://www.rtp.pt/play/direto/rtp1
 https://streaming-live.rtp.pt/liverepeater/smil:rtp1HD.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="RTP2" tvg-logo="https://upload.wikimedia.org/wikipedia/en/4/4d/Rtp2_2016_logo.png" tvg-id="RTP2.pt" tvg-chno="2" tvg-country="PT" group-title="Portugal",RTP2 Ⓖ
 https://streaming-live.rtp.pt/liverepeater/rtp2HD.smil/playlist.m3u8
@@ -165,7 +172,7 @@ https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/play
 #EXTINF:-1 tvg-id="ThaiPBS.th@SD" tvg-chno="3" group-title="Thailand",Thai PBS
 https://thaipbs-live.cdn.byteark.com/live/playlist.m3u8
 #EXTINF:-1 tvg-id="Channel5.th@SD" tvg-chno="5" group-title="Thailand",Channel 5 HD
-https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8
+https://live-us1.thaimomo.com/live-as/ch5hd-2/playlist.m3u8
 #EXTINF:-1 tvg-id="TSports7.th@SD" tvg-chno="7" group-title="Thailand",T Sports 7
 https://live-us1.thaimomo.com/live-as/chtsport-1/playlist.m3u8
 #EXTINF:-1 tvg-id="TPTV.th@SD" tvg-chno="10" group-title="Thailand",TPTV
@@ -185,7 +192,7 @@ https://live-us1.thaimomo.com/live-as/cheight-3/playlist.m3u8
 #EXTINF:-1 tvg-id="MONO29.th@SD" tvg-chno="29" group-title="Thailand",MONOMAX SPORTS TV 29
 https://live-us1.thaimomo.com/live-as/chmono29-2/playlist.m3u8
 #EXTINF:-1 tvg-id="MCOTHD.th@HD" tvg-chno="30" group-title="Thailand",9 MCOT HD
-https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8
+https://live-us1.thaimomo.com/live-as/chmcothd-3/playlist.m3u8
 #EXTINF:-1 tvg-id="One31.th@SD" tvg-chno="31" group-title="Thailand",One31
 https://live-us1.thaimomo.com/live-as/chone-3/playlist.m3u8
 #EXTINF:-1 tvg-id="ThairathTV.th@SD" tvg-chno="32" group-title="Thailand",Thairath TV
@@ -254,7 +261,7 @@ https://do7nccdsswstc.cloudfront.net/v1/manifest/3722c60a815c199d9c0ef36c5b73da6
 
 # === KIDS — PORTUGUESE ===
 # --- FAMELACK KIDS PORTUGUESE START ---
-#EXTINF:-1 tvg-id="SSTVFamelackKids.pt-nickelodeon" tvg-country="BR" group-title="KIDS | Portuguese",Nickelodeon
+#EXTINF:-1 tvg-id="SSTVFamelackKids.pt-nickelodeon" tvg-country="BR" group-title="KIDS | Portuguese",NickToons Brasil
 https://stmv2.srvif.com/nicktoons/nicktoons/playlist.m3u8
 # --- FAMELACK KIDS PORTUGUESE END ---
 
