@@ -45,7 +45,7 @@ WANTED = [
 
     # Major direct HLS branded feeds exposed by Famelack
     {"language": "Spanish", "key": "es-disneyjr-latam-south", "name": "Disney Jr. Latin America South"},
-    {"language": "Portuguese", "key": "pt-nickelodeon", "name": "Nickelodeon"},
+    {"language": "Portuguese", "key": "pt-nickelodeon", "name": "Nickelodeon", "display": "NickToons Brasil"},
 ]
 
 LANG_COUNTRY_FALLBACK = {
