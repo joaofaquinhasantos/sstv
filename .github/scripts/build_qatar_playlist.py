@@ -16,7 +16,7 @@ WEBPAGE_HOSTS = {
     "lcp.fr", "www.lcp.fr",
     "publicsenat.fr", "www.publicsenat.fr",
 }
-EXPLICIT_SKIP_NAMES = {"Tiny Pop [Geo]", "POP [Geo]"}
+EXPLICIT_SKIP_NAMES = {"Tiny Pop [Geo]", "POP [Geo]", "Channel 7 HD", "Channel 8"}
 
 
 def fetch(url, headers=None, timeout=12, max_bytes=160_000):
@@ -101,6 +101,9 @@ def parse_entries(text):
             elif low.startswith("#extvlcopt:http-referrer="):
                 options.append(s)
                 headers["Referer"] = s.split("=", 1)[1].strip()
+            elif low.startswith("#extvlcopt:http-origin="):
+                options.append(s)
+                headers["Origin"] = s.split("=", 1)[1].strip()
             elif s.startswith("http://") or s.startswith("https://"):
                 url = s
                 break
