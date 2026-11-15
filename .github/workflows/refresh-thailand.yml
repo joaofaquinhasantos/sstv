@@ -44,8 +44,6 @@ jobs:
               "13SiamThai.th": ("13 Siam Thai", None, True),
               "ALTV.th": ("ALTV", None, True),
               "AmarinTV.th": ("Amarin TV 34", 34, False),
-              "Channel7.th": ("Channel 7 HD", 35, False),
-              "Channel8.th": ("Channel 8", 27, False),
               "CoolChannel.th": ("Cool Channel", None, True),
               "GMM25.th": ("GMM25", 25, False),
               "MONO29.th": ("MONO29", 29, False),
