@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "sstv.m3u"
       - ".github/workflows/audit-playlist.yml"
   schedule:
     - cron: "17 */6 * * *"
