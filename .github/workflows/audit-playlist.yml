@@ -50,7 +50,9 @@ jobs:
                   if low.startswith("#extvlcopt:http-user-agent="):
                       opts["User-Agent"] = s.split("=",1)[1]
                   elif low.startswith("#extvlcopt:http-referrer="):
-                      opts["Referer"] = s.split("=",1)[1]
+                      opts["Referer"] = s.split("=",1)[1].strip()
+                  elif low.startswith("#extvlcopt:http-origin="):
+                      opts["Origin"] = s.split("=",1)[1].strip()
                   elif s.startswith("http://") or s.startswith("https://"):
                       url = s
                       break
