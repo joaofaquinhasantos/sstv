@@ -120,14 +120,14 @@ https://mvg-mv-xumo.otteravision.com/mvg/mv/mv.m3u8
 https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 
 # === BRAZIL ===
+#EXTINF:-1 tvg-name="Canal Gov" tvg-id="CanalGov.br" tvg-country="BR" group-title="Brazil",Canal Gov
+https://canalgov-stream.ebc.com.br/index.m3u8
+
+#EXTINF:-1 tvg-name="CNN Brasil" tvg-id="CNNBrasil.br" tvg-country="BR" group-title="Brazil",CNN Brasil
+https://d25usgadhphvwi.cloudfront.net/hls/main.m3u8
 
 #EXTINF:-1 tvg-name="Record News" tvg-id="RecordNews.br" tvg-country="BR" group-title="Brazil",Record News
-https://stream.ads.ottera.tv/playlist.m3u8?network_id=2116
-
-#EXTINF:-1 tvg-name="Record" tvg-id="Record.br" tvg-country="BR" group-title="Brazil",Record
-https://media.cdntvms.com.br/record_nacional_sat/index.m3u8
-
-
+https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
 
 #EXTINF:-1 tvg-name="SBT Nacional" tvg-id="SBTNacional.br" tvg-country="BR" group-title="Brazil",SBT Nacional
 https://6836041ea1117.streamlock.net/cverde/cverde/playlist.m3u8
@@ -135,15 +135,8 @@ https://6836041ea1117.streamlock.net/cverde/cverde/playlist.m3u8
 #EXTINF:-1 tvg-name="SBT News" tvg-id="SBTNews.br" tvg-country="BR" group-title="Brazil",SBT News
 https://dai.google.com/linear/hls/event/1XSOdtQ0SH2G8OEmEfGgjQ/master.m3u8
 
-
-#EXTINF:-1 tvg-name="Band" tvg-id="Band.br" tvg-country="BR" group-title="Brazil",Band
-https://media.cdntvms.com.br/band_sat/index.m3u8
 #EXTINF:-1 tvg-name="TV Brasil" tvg-id="TVBrasil.br" tvg-country="BR" group-title="Brazil",TV Brasil
 https://tvbrasil-stream.ebc.com.br/index.m3u8
-#EXTINF:-1 tvg-name="Canal Gov" tvg-id="CanalGov.br" tvg-country="BR" group-title="Brazil",Canal Gov
-https://canalgov-stream.ebc.com.br/index.m3u8
-#EXTINF:-1 tvg-name="CNN Brasil" tvg-id="CNNBrasil.br" tvg-country="BR" group-title="Brazil",CNN Brasil
-https://d25usgadhphvwi.cloudfront.net/hls/main.m3u8
 
 # === THAILAND ===
 #EXTINF:-1 tvg-id="NBT2HD.th@SD" tvg-chno="2" group-title="Thailand",NBT 2HD
