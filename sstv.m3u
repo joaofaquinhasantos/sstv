@@ -254,17 +254,6 @@ https://dikkyk1ckkhzq.cloudfront.net/RabiddsInvasion_GB.m3u8
 https://d2f1o3sb3u36tf.cloudfront.net/master.m3u8
 #EXTINF:-1 tvg-id="SSTVKids.en-pokemon" tvg-country="US" group-title="KIDS | English",Pokémon
 https://docpe51mdltl5.cloudfront.net/Pokemon_GB.m3u8
-#EXTINF:-1 tvg-name="MeTV Toons" tvg-country="US" group-title="KIDS | English",MeTV Toons
-https://sr-live-weigel1.akamaized.net/out/v1/0d1dbf29e64e47bc991796cc24fbeb97/index_2.m3u8
-#EXTINF:-1 tvg-name="Mr. Bean Animated" tvg-country="GB" group-title="KIDS | English",Mr. Bean Animated
-https://d2t1w90tnft92.cloudfront.net/Mr_Bean_Animated.m3u8
-#EXTINF:-1 tvg-name="ZooMoo" tvg-country="SG" group-title="KIDS | English",ZooMoo
-https://d1bpufuvfayfg8.cloudfront.net/ZooMoo.m3u8
-#EXTINF:-1 tvg-name="TVOKids" tvg-country="CA" group-title="KIDS | English",TVOKids
-https://fastly.live.brightcove.com/6369851620112/us-east-1/15364602001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoicGZncmlmLmVncmVzcy50N2M3emwiLCJhY2NvdW50X2lkIjoiMTUzNjQ2MDIwMDEiLCJlaG4iOiJmYXN0bHkubGl2ZS5icmlnaHRjb3ZlLmNvbSIsImlzcyI6ImJsaXZlLXBsYXliYWNrLXNvdXJjZS1hcGkiLCJzdWIiOiJwYXRobWFwdG9rZW4iLCJhdWQiOlsiMTUzNjQ2MDIwMDEiXSwianRpIjoiNjM2OTg1MTYyMDExMiJ9.zRE6fD9JwdbNLUIK5zgvlTAvXCQ3HeeE5p0yH0Pd3-Q/playlist-hls.m3u8
-#EXTINF:-1 tvg-name="pocket.watch" tvg-country="US" group-title="KIDS | English",pocket.watch
-https://dl74gpgmnb7i8.cloudfront.net/pocketwatch_GameOn.m3u8
-
 # --- AUTO KIDS ENGLISH END ---
 #EXTINF:-1 tvg-id="PBSKids.us" group-title="KIDS | English",PBS Kids
 https://livestream.pbskids.org/out/v1/14507d931bbe48a69287e4850e53443c/est.m3u8
