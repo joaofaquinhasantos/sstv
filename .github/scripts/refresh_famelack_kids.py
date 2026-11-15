@@ -42,10 +42,6 @@ WANTED = [
     {"language": "English", "key": "en-disneyjr-superkitties", "name": "Disney Junior: SuperKitties"},
     {"language": "English", "key": "en-disneyjr-winnie", "name": "Disney Junior: Winnie the Pooh"},
     {"language": "English", "key": "en-bluey-official", "name": "Bluey - Official Channel"},
-
-    # Major direct HLS branded feeds exposed by Famelack
-    {"language": "Spanish", "key": "es-disneyjr-latam-south", "name": "Disney Jr. Latin America South"},
-    {"language": "Portuguese", "key": "pt-nickelodeon", "name": "Nickelodeon", "display": "NickToons Brasil"},
 ]
 
 LANG_COUNTRY_FALLBACK = {
