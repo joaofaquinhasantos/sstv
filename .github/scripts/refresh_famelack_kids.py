@@ -5,7 +5,7 @@ import urllib.request
 from pathlib import Path
 
 PLAYLIST = Path("sstv.m3u")
-FAMELACK_KIDS = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/raw/categories/kids.json"
+FAMELACK_KIDS = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/categories/kids.json"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"
 
 # Priority requested for SSTV: French -> Thai -> English. Famelack currently exposes
